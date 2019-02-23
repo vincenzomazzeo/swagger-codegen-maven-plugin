@@ -17,7 +17,7 @@ It is intended to be used in projects that only need Model and API generation.
       type: object
       properties: [...]
   ```
-- Usage of external Model classes as fields of the internal Model and as parameters/body of the API's.
+- Usage of external Model classes as fields of the internal Model and as parameters/response of the API's.
 
   It is possible for a Model class to have one or more external classes as field type by specifying the type of the field as `string` and the alias of the external type in the extension `x-type`:
   ```
@@ -33,7 +33,7 @@ It is intended to be used in projects that only need Model and API generation.
           type: string
           x-type: NTPage
   ```
-  It is possible for an API to use an external class as parameter by specifying the type as `string` and the alias of the external type in the extension `x-type`:
+  It is possible for an API to use an external class as parameter/response by specifying the type as `string` and the alias of the external type in the extension `x-type`:
   ```
     /testGetModel/page:
       post:
@@ -107,11 +107,11 @@ The `DataTypeMapping` has the following sections:
 
 - `directMap` to define explicitly the external Model classes by specifying the alias and the fully qualified name.
 - `packages` to specify a list of packages to scan. The usage of the '**' wildcard enables the sub packages scanning.
-- `externalResources` list of URL's linking to external YAML file containing the mapping.
+- `externalResources` list of URL's linking to external YAML files containing the mapping.
 
 > Note that:
-> - with the packages scanning is not possible to define an alias for the the classes. This means that the name of the class will be used as alias and in case of naming clash (classes with the same name in difference packages) only the last found class is added. 
-> - the packages scanning doesn't work on project packages. To use project classes it is necessary to declare them with the direct mapping feature.
+> - with the packages scanning is not possible to define an alias for the the classes. This means that the name of the class will be used as alias and in case of naming clash (classes with the same name in difference packages) only the latest found class is added. 
+> - the packages scanning doesn't work with packages of the project. To use classes of the project it is necessary to declare them with the direct mapping feature.
 > - the packages scanning requires that the project(s) containing the packages to be scanned must be added as dependency to the plugin.
 
 
