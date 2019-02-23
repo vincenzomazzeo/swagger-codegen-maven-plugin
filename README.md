@@ -7,16 +7,18 @@ It is intended to be used in projects that only need Model and API generation.
 
 - Model classes generation
 - API interfaces generation
-- Inheritance of the Model classes from external Model classes
+- Inheritance of the Model classes from external Model classes.
+
   It is possible for a Model class to extend an external class specifying the alias of the super class in the extension `x-superClass`:
   ```
     TestModel:
-      **x-superClass:
-        - AbstractModel**
+      x-superClass:
+        - AbstractModel
       type: object
       properties: [...]
   ```
-- Usage of external Model classes as fields of the internal Model and as parameters/body of the API's
+- Usage of external Model classes as fields of the internal Model and as parameters/body of the API's.
+
   It is possible for a Model class to have one or more external classes as field type by specifying the type of the field as `string` and the alias of the external type in the extension `x-type`:
   ```
     TestModel:
@@ -25,11 +27,11 @@ It is intended to be used in projects that only need Model and API generation.
         name:
           type: string
         page:
-          **type: string
-          x-type: NTPage**
+          type: string
+          x-type: NTPage
         otherPage:
-          **type: string
-          x-type: NTPage**
+          type: string
+          x-type: NTPage
   ```
   It is possible for an API to use an external class as parameter by specifying the type as `string` and the alias of the external type in the extension `x-type`:
   ```
@@ -39,14 +41,14 @@ It is intended to be used in projects that only need Model and API generation.
           - name: anomaly
             in: body
             schema:
-              **type: string
-              x-type: NTPage**
+              type: string
+              x-type: NTPage
         responses:
           '200':
             description: successful operation
             schema:
-              **type: string
-              x-type: NTPage**
+              type: string
+              x-type: NTPage
         operationId: testGetPage
         consumes:
           - application/json
@@ -56,7 +58,7 @@ It is intended to be used in projects that only need Model and API generation.
 
 ## Build
 
-You'll need a machine with Java 8 and Apache Maven 3 installed.
+Needs a machine with Java 8 and Apache Maven 3 installed.
 
 Checkout:
 
@@ -108,9 +110,9 @@ The `DataTypeMapping` has the following sections:
 - `externalResources` list of URL's linking to external YAML file containing the mapping.
 
 > Note that:
-- with the packages scanning is not possible to define an alias for the the classes. This means that the name of the class will be used as alias and in case of naming clash (classes with the same name in difference packages) only the last found class is added. 
-- the packages scanning doesn't work on project packages. To use project classes it is necessary to declare them with the direct mapping feature.
-- the packages scanning requires that the project(s) containing the packages to be scanned must be added as dependency to the plugin.
+> - with the packages scanning is not possible to define an alias for the the classes. This means that the name of the class will be used as alias and in case of naming clash (classes with the same name in difference packages) only the last found class is added. 
+> - the packages scanning doesn't work on project packages. To use project classes it is necessary to declare them with the direct mapping feature.
+> - the packages scanning requires that the project(s) containing the packages to be scanned must be added as dependency to the plugin.
 
 
 ### Example
