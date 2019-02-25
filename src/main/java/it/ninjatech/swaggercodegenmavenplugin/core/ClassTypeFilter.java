@@ -33,10 +33,8 @@ import org.springframework.core.type.filter.TypeFilter;
 
 /**
  * <p>
- * Type Filter used to filter the classes during the package scanning.
- * <br />
- * Filters all the classes belonging to the <i>base package</i> passed as input
- * and all the classes of its sub packages if the "**" wildcard has been
+ * Type Filter used to filter the classes during the package scanning. <br>
+ * Filters all the classes belonging to the <i>base package</i> passed as input and all the classes of its sub packages if the "**" wildcard has been
  * specified.
  * </p>
  * 
@@ -58,7 +56,8 @@ public class ClassTypeFilter implements TypeFilter {
 	/**
 	 * Instantiates a new Class Type Filter.
 	 *
-	 * @param Base package
+	 * @param basePackage
+	 *            Base package
 	 */
 	protected ClassTypeFilter(String basePackage) {
 		this.recursive = basePackage.endsWith(RECURSIVE_PATTERN);
@@ -79,14 +78,14 @@ public class ClassTypeFilter implements TypeFilter {
 	}
 
 	/**
-	 * Matching method.
-	 * <br />
-	 * Return <i>true</i> if the class belongs to the base package or one of its sub
-	 * packages if the "**" wildcard has been specified.
+	 * Matching method. <br>
+	 * Return <i>true</i> if the class belongs to the base package or one of its sub packages if the "**" wildcard has been specified.
 	 *
-	 * @param Metadata of the class to check
+	 * @param metadata
+	 *            Metadata of the class to check
 	 * @return true, if successful
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public boolean match(ClassMetadata metadata) throws IOException {
 		boolean result = false;

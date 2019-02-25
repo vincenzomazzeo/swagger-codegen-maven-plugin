@@ -73,7 +73,8 @@ public class Configuration {
 	/**
 	 * Sets the AbstractJavaCodegen.
 	 *
-	 * @param AbstractJavaCodegen
+	 * @param javaCodegen
+	 *            AbstractJavaCodegen
 	 * @return The instance of the Configuration
 	 */
 	public Configuration setJavaCodegen(Class<? extends AbstractJavaCodegen> javaCodegen) {
@@ -95,6 +96,7 @@ public class Configuration {
 	 * Sets the verbose output.
 	 *
 	 * @param verbose
+	 *            Verbose
 	 * @return The instance of the Configuration
 	 */
 	public Configuration setVerbose(boolean verbose) {
@@ -115,7 +117,8 @@ public class Configuration {
 	/**
 	 * Sets the output folder.
 	 *
-	 * @param Output folder
+	 * @param outputFolder
+	 *            Output folder
 	 * @return The instance of the Configuration
 	 */
 	public Configuration setOutputFolder(File outputFolder) {
@@ -136,7 +139,8 @@ public class Configuration {
 	/**
 	 * Sets the SWAGGER source files to elaborate.
 	 *
-	 * @param SWAGGER source files
+	 * @param sourceFiles
+	 *            SWAGGER source files
 	 * @return The instance of the Configuration
 	 */
 	public Configuration setSourceFiles(List<URL> sourceFiles) {
@@ -157,7 +161,8 @@ public class Configuration {
 	/**
 	 * Sets the package for Model classes.
 	 *
-	 * @param Package for Model classes
+	 * @param modelPackage
+	 *            Package for Model classes
 	 * @return The instance of the Configuration
 	 */
 	public Configuration setModelPackage(String modelPackage) {
@@ -178,7 +183,8 @@ public class Configuration {
 	/**
 	 * Sets the package for API interfaces.
 	 *
-	 * @param Package for API interfaces
+	 * @param apiPackage
+	 *            Package for API interfaces
 	 * @return The instance of the Configuration
 	 */
 	public Configuration setApiPackage(String apiPackage) {
@@ -199,7 +205,8 @@ public class Configuration {
 	/**
 	 * Sets the data type mapping.
 	 *
-	 * @param Data type mapping
+	 * @param dataTypeMapping
+	 *            Data type mapping
 	 * @return The instance of the Configuration
 	 */
 	public Configuration setDataTypeMapping(DataTypeMapping dataTypeMapping) {

@@ -29,28 +29,15 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * <p>
- * Data Type Mapping Configuration.
- * <br />
- * Used to map external Model classes. It is possible to define three types of
- * mapping:
+ * Data Type Mapping Configuration. <br>
+ * Used to map external Model classes. It is possible to define three types of mapping:
  * <ul>
- * <li>
- * Direct Mapping: used to define explicitly the classes to map. For each
- * mapping an alias and the related fully qualified name of the class must be
- * defined.
- * </li>
- * <li>
- * Packages: used to define a list of packages to scan. All the classes
- * contained in each package are added to the mapping. To scan a package
- * recursively, the "**" wildcard must be added as subpackage.
- * </li>
- * <li>
- * External Resources: used to define a list of URL linking to YAML files, each
- * one containing a Data Type Mapping Configuration.
- * </li>
+ * <li>Direct Mapping: used to define explicitly the classes to map. For each mapping an alias and the related fully qualified name of the class must
+ * be defined.</li>
+ * <li>Packages: used to define a list of packages to scan. All the classes contained in each package are added to the mapping. To scan a package
+ * recursively, the "**" wildcard must be added as subpackage.</li>
+ * <li>External Resources: used to define a list of URL linking to YAML files, each one containing a Data Type Mapping Configuration.</li>
  * </ul>
- * </p>
  *
  * @author Vincenzo Mazzeo
  * @version 1.0
@@ -79,7 +66,8 @@ public class DataTypeMapping {
 	/**
 	 * Sets the direct map.
 	 *
-	 * @param Direct map
+	 * @param directMap
+	 *            Direct map
 	 */
 	public void setDirectMap(Map<String, String> directMap) {
 		this.directMap = directMap;
@@ -97,7 +85,8 @@ public class DataTypeMapping {
 	/**
 	 * Sets the packages to scan.
 	 *
-	 * @param Packages
+	 * @param packages
+	 *            Packages
 	 */
 	public void setPackages(Set<String> packages) {
 		this.packages = packages;
@@ -115,7 +104,8 @@ public class DataTypeMapping {
 	/**
 	 * Sets the external resources.
 	 *
-	 * @param External resources
+	 * @param externalResources
+	 *            External resources
 	 */
 	public void setExternalResources(Set<URL> externalResources) {
 		this.externalResources = externalResources;

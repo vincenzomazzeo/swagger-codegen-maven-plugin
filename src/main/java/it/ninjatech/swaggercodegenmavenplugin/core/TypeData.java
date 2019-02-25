@@ -42,8 +42,10 @@ public final class TypeData {
 	/**
 	 * Instantiates a new Type Data.
 	 *
-	 * @param fullyQualifiedName the fully qualified name
-	 * @param name the name
+	 * @param fullyQualifiedName
+	 *            Fully qualified name
+	 * @param name
+	 *            Name
 	 */
 	protected TypeData(String fullyQualifiedName, String name) {
 		this.fullyQualifiedName = fullyQualifiedName;

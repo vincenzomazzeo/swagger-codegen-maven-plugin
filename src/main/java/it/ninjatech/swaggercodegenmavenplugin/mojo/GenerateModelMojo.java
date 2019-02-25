@@ -32,10 +32,8 @@ import io.swagger.codegen.DefaultGenerator;
 
 /**
  * <p>
- * Maven MOJO to generate the Model classes.
- * <br />
- * It is activated by the goal <strong>generate-model</strong> during the
- * <strong>generate sources</strong> phase.
+ * Maven MOJO to generate the Model classes. <br>
+ * It is activated by the goal <strong>generate-model</strong> during the <strong>generate sources</strong> phase.
  * </p>
  * 
  * @author Vincenzo Mazzeo

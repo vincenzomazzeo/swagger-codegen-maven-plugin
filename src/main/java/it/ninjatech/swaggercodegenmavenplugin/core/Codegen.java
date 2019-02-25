@@ -44,10 +44,8 @@ import io.swagger.util.Json;
 
 /**
  * <p>
- * Extension of the Swagger Spring Codegen.
- * <br />
- * It enables the inheritance of the Model classes from external Model classes
- * and the usage of external Model classes as parameters both in Model and
+ * Extension of the Swagger Spring Codegen. <br>
+ * It enables the inheritance of the Model classes from external Model classes and the usage of external Model classes as parameters both in Model and
  * API's.
  * </p>
  * 
@@ -213,8 +211,10 @@ public final class Codegen extends SpringCodegen {
 	/**
 	 * Adds the import of the external Model classes.
 	 *
-	 * @param Objects
-	 * @param Alias of the class to import
+	 * @param objs
+	 *            Objects
+	 * @param alias
+	 *            Alias of the class to import
 	 */
 	@SuppressWarnings("unchecked")
 	private void addImport(Map<String, Object> objs, String alias) {

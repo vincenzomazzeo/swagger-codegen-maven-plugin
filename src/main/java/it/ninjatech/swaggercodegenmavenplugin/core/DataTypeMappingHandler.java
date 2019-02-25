@@ -53,10 +53,13 @@ public class DataTypeMappingHandler {
 	/**
 	 * Handles the {@link DataTypeMapping} configuration.
 	 *
-	 * @param Log
-	 * @param Data type mapping
+	 * @param log
+	 *            Log
+	 * @param dataTypeMapping
+	 *            Data type mapping
 	 * @return the Resolved Map
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	protected static Map<String, TypeData> handle(Log log, DataTypeMapping dataTypeMapping) throws IOException {
 		Map<String, TypeData> result = null;
@@ -76,10 +79,14 @@ public class DataTypeMappingHandler {
 	/**
 	 * Handle the {@link DataTypeMapping} configuration.
 	 *
-	 * @param Log
-	 * @param Data type mapping
-	 * @param the Resolved Map
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param log
+	 *            Log
+	 * @param dataTypeMapping
+	 *            Data type mapping
+	 * @param typeMap
+	 *            the Resolved Map
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	private static void handle(Log log, DataTypeMapping dataTypeMapping, Map<String, TypeData> typeMap) throws IOException {
 		handleDirectMap(typeMap, dataTypeMapping.getDirectMap());
@@ -90,8 +97,10 @@ public class DataTypeMappingHandler {
 	/**
 	 * Handles the Direct Mapping.
 	 *
-	 * @param the Resolved Map
-	 * @param Direct Mapping
+	 * @param typeMap
+	 *            the Resolved Map
+	 * @param directMap
+	 *            Direct Mapping
 	 */
 	private static void handleDirectMap(Map<String, TypeData> typeMap, Map<String, String> directMap) {
 		for (Entry<String, String> directMapEntry : directMap.entrySet()) {
@@ -103,9 +112,12 @@ public class DataTypeMappingHandler {
 	/**
 	 * Handles the Packages to scan.
 	 *
-	 * @param Log
-	 * @param the Resolved Map
-	 * @param Packages to scan
+	 * @param log
+	 *            Log
+	 * @param typeMap
+	 *            the Resolved Map
+	 * @param packages
+	 *            Packages to scan
 	 */
 	private static void handlePackages(Log log, Map<String, TypeData> typeMap, Set<String> packages) {
 		for (String package_ : packages) {
@@ -124,10 +136,14 @@ public class DataTypeMappingHandler {
 	 * Handles the External Resources.
 	 * 
 	 *
-	 * @param Log
-	 * @param the Resolved Map
-	 * @param External Resources
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param log
+	 *            Log
+	 * @param typeMap
+	 *            the Resolved Map
+	 * @param externalResources
+	 *            External Resources
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	private static void handleExternalResources(Log log, Map<String, TypeData> typeMap, Set<URL> externalResources) throws IOException {
 		for (URL externalResource : externalResources) {
@@ -146,7 +162,8 @@ public class DataTypeMappingHandler {
 	/**
 	 * Returns the type data.
 	 *
-	 * @param Fully qualified name
+	 * @param fullyQualifiedName
+	 *            Fully qualified name
 	 * @return Type data
 	 */
 	private static TypeData getTypeData(String fullyQualifiedName) {

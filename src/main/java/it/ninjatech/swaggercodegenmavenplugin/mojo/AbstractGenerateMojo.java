@@ -75,10 +75,10 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	private DataTypeMapping dataTypeMapping;
 
 	/**
-	 * Permits to the descending MOJO classes to apply custom settings to the
-	 * Default Generator after the common setup.
+	 * Permits to the descending MOJO classes to apply custom settings to the Default Generator after the common setup.
 	 *
-	 * @param Default Generator
+	 * @param defaultGenerator
+	 *            Default Generator
 	 */
 	protected abstract void postDefaultGeneratorSetup(DefaultGenerator defaultGenerator);
 

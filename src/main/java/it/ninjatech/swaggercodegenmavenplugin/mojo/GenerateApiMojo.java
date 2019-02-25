@@ -32,10 +32,8 @@ import io.swagger.codegen.DefaultGenerator;
 
 /**
  * <p>
- * Maven MOJO to generate the API interfaces.
- * <br />
- * It is activated by the goal <strong>generate-api</strong> during the
- * <strong>generate sources</strong> phase.
+ * Maven MOJO to generate the API interfaces. <br>
+ * It is activated by the goal <strong>generate-api</strong> during the <strong>generate sources</strong> phase.
  * </p>
  * 
  * @author Vincenzo Mazzeo

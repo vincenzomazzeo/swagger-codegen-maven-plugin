@@ -38,8 +38,7 @@ import it.ninjatech.swaggercodegenmavenplugin.configuration.Configuration;
 
 /**
  * <p>
- * Factory for {@link CodegenConfigurator}.
- * <br />
+ * Factory for {@link CodegenConfigurator}. <br>
  * It is a singleton that configures the {@link CodegenConfigurator} once.
  * </p>
  * 
@@ -55,10 +54,13 @@ public final class GeneratorFactory {
 	/**
 	 * Returns the Singleton instance.
 	 *
-	 * @param Log
-	 * @param Configuration
+	 * @param log
+	 *            Log
+	 * @param configuration
+	 *            Configuration
 	 * @return Singleton instance
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public static GeneratorFactory getInstance(Log log, Configuration configuration) throws IOException {
 		return instance == null ? instance = new GeneratorFactory(log, configuration) : instance;
@@ -73,9 +75,12 @@ public final class GeneratorFactory {
 	/**
 	 * Instantiates a new Generator Factory.
 	 *
-	 * @param Log
-	 * @param Configuration
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param log
+	 *            Log
+	 * @param configuration
+	 *            Configuration
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	private GeneratorFactory(Log log, Configuration configuration) throws IOException {
 		this.log = log;
@@ -85,10 +90,10 @@ public final class GeneratorFactory {
 	}
 
 	/**
-	 * Makes a new instance of the {@link DefaultGenerator} from the
-	 * {@link CodegenConfigurator} set with the source passed as input.
+	 * Makes a new instance of the {@link DefaultGenerator} from the {@link CodegenConfigurator} set with the source passed as input.
 	 *
-	 * @param SWAGGER source
+	 * @param source
+	 *            SWAGGER source
 	 * @return Default Generator
 	 */
 	public DefaultGenerator make(URL source) {
@@ -112,11 +117,12 @@ public final class GeneratorFactory {
 	}
 
 	/**
-	 * Configures the {@link CodegenConfigurator} with the passed
-	 * {@link Configuration}.
+	 * Configures the {@link CodegenConfigurator} with the passed {@link Configuration}.
 	 *
-	 * @param Configuration
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param configuration
+	 *            Configuration
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	private void configure(Configuration configuration) throws IOException {
 		this.codegenConfigurator.setLang(configuration.getJavaCodegen().getName());
