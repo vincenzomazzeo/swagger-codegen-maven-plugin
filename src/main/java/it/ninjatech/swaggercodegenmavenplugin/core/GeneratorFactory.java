@@ -34,6 +34,8 @@ import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.CodegenConstants;
 import io.swagger.codegen.DefaultGenerator;
 import io.swagger.codegen.config.CodegenConfigurator;
+import io.swagger.codegen.languages.AbstractJavaCodegen;
+import io.swagger.codegen.languages.features.BeanValidationFeatures;
 import it.ninjatech.swaggercodegenmavenplugin.configuration.Configuration;
 
 /**
@@ -86,6 +88,8 @@ public final class GeneratorFactory {
 		this.log = log;
 		this.codegenConfigurator = new CodegenConfigurator();
 
+		log.info(configuration.toString());
+
 		configure(configuration);
 	}
 
@@ -130,6 +134,10 @@ public final class GeneratorFactory {
 		this.codegenConfigurator.setOutputDir(configuration.getOutputFolder().getAbsolutePath());
 		this.codegenConfigurator.setModelPackage(configuration.getModelPackage());
 		this.codegenConfigurator.setApiPackage(configuration.getApiPackage());
+		this.codegenConfigurator.addAdditionalProperty(AbstractJavaCodegen.DATE_LIBRARY, configuration.getDateLibrary().getValue());
+		this.codegenConfigurator.addAdditionalProperty(BeanValidationFeatures.USE_BEANVALIDATION, configuration.isEnableBeanValidation());
+		this.codegenConfigurator.addAdditionalProperty(AbstractJavaCodegen.JAVA8_MODE, configuration.isEnableJava8());
+		this.codegenConfigurator.addAdditionalProperty(Codegen.FORCE_JDK8_OFF, !configuration.isEnableJava8());
 
 		Map<String, TypeData> typeMapping = DataTypeMappingHandler.handle(this.log, configuration.getDataTypeMapping());
 		if (!typeMapping.isEmpty()) {

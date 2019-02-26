@@ -94,20 +94,31 @@ The current release is **1.0.0**.
 
 The plugin requires only a bunch of configuration parameters:
 
-| Parameter       | Type              | Description                                  | Default | Required |
-|-----------------|-------------------|----------------------------------------------|---------|----------|
-| verbose         | `boolean`         | Enables verbose output                       | `false` | `false`  |
-| outputFolder    | `File`            | Generated files output folder                |         | `true`   |
-| sourceFiles     | `List<URL>`       | List of URL's of the Swagger YAML files      |         | `true`   |
-| apiPackage      | `String`          | Package of the API's interfaces              |         | `false`  |
-| modelPackage    | `String`          | Package of the Model classes                 |         | `false`  |
-| dataTypeMapping | `DataTypeMapping` | Data Type Mapping for external Model classes |         | `false`  |
+| Parameter         | Type              | Description                                  | Default | Required |
+|-------------------|-------------------|----------------------------------------------|---------|----------|
+| verbose           | `boolean`         | Enables verbose output                       | `false` | `false`  |
+| outputFolder      | `File`            | Generated files output folder                |         | `true`   |
+| sourceFiles       | `List<URL>`       | List of URL's of the Swagger YAML files      |         | `true`   |
+| apiPackage        | `String`          | Package of the API's interfaces              |         | `false`  |
+| modelPackage      | `String`          | Package of the Model classes                 |         | `false`  |
+| dataTypeMapping   | `DataTypeMapping` | Data Type Mapping for external Model classes |         | `false`  |
+| enableJava8      | `boolean`           | Enable Java 8 support | `false`  | `true`  |
+| dateLibrary       | `DateLibrary`      | Library to use for Date & Time | `JAVA8_LOCALDATE`        | `true`  |
+| enableBeanValidation | `boolean` | Enable the Validation framework | `true`        | `true`  |
 
 The `DataTypeMapping` has the following sections:
 
 - `directMap` to define explicitly the external Model classes by specifying the alias and the fully qualified name.
 - `packages` to specify a list of packages to scan. The usage of the '**' wildcard enables the sub packages scanning.
 - `externalResources` list of URL's linking to external YAML files containing the mapping.
+
+The `DateLibrary` can have one of the following value:
+
+- `LEGACY`
+- `JAVA8`
+- `JAVA8_LOCALDATE`
+- `JODA`
+- `THREE_TEN`
 
 > Note that:
 > - with the packages scanning is not possible to define an alias for the the classes. This means that the name of the class will be used as alias and in case of naming clash (classes with the same name in difference packages) only the latest found class is added. 

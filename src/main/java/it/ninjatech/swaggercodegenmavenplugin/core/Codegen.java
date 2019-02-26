@@ -55,6 +55,8 @@ import io.swagger.util.Json;
  */
 public final class Codegen extends SpringCodegen {
 
+	protected static final String FORCE_JDK8_OFF = "forceJdk8Off";
+
 	/** The Constant X_TYPE. */
 	private static final String X_TYPE = "x-type";
 
@@ -99,6 +101,11 @@ public final class Codegen extends SpringCodegen {
 		setInterfaceOnly(true); // Excludes the Controllers Generation
 
 		super.processOpts();
+
+		if ((boolean) this.additionalProperties.get(FORCE_JDK8_OFF)) {
+			this.additionalProperties.remove("jdk8-no-delegate");
+			this.additionalProperties.remove("jdk8");
+		}
 	}
 
 	/**

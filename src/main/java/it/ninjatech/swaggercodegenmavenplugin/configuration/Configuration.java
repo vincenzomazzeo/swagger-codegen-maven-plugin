@@ -61,6 +61,32 @@ public class Configuration {
 	/** Data type mapping. */
 	private DataTypeMapping dataTypeMapping;
 
+	/** Enable Java 8 */
+	private boolean enableJava8;
+
+	/** Date Library to use */
+	private DateLibrary dateLibrary;
+
+	/** Enable Bean Validation */
+	private boolean enableBeanValidation;
+
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+
+		result.append("Configuration:");
+		result.append("\n    Java Codegen -> ").append(this.javaCodegen.getName());
+		result.append("\n    Verbose -> ").append(this.verbose);
+		result.append("\n    Output Folder -> ").append(this.outputFolder);
+		result.append("\n    Model Package -> ").append(this.modelPackage);
+		result.append("\n    API Package -> ").append(this.apiPackage);
+		result.append("\n    Enable Java 8 -> ").append(this.enableJava8);
+		result.append("\n    Date Library -> ").append(this.dateLibrary);
+		result.append("\n    Enable Bean Validation -> ").append(this.enableBeanValidation);
+
+		return result.toString();
+	}
+
 	/**
 	 * Returns the AbstractJavaCodegen.
 	 *
@@ -211,6 +237,72 @@ public class Configuration {
 	 */
 	public Configuration setDataTypeMapping(DataTypeMapping dataTypeMapping) {
 		this.dataTypeMapping = dataTypeMapping;
+
+		return this;
+	}
+
+	/**
+	 * Returns if to enable Java 8.
+	 * 
+	 * @return If Java 8 is to enable
+	 */
+	public boolean isEnableJava8() {
+		return this.enableJava8;
+	}
+
+	/**
+	 * Sets if Java 8 has to be enabled.
+	 * 
+	 * @param enableJava8
+	 *            If Java 8 has to be enabled
+	 * @return The instance of the Configuration
+	 */
+	public Configuration setEnableJava8(boolean enableJava8) {
+		this.enableJava8 = enableJava8;
+
+		return this;
+	}
+
+	/**
+	 * Returns the Date Library to use.
+	 * 
+	 * @return Date Library to use
+	 */
+	public DateLibrary getDateLibrary() {
+		return this.dateLibrary;
+	}
+
+	/**
+	 * Sets the Date Library to use.
+	 * 
+	 * @param dateLibrary
+	 *            Date Library to use
+	 * @return The instance of the Configuration
+	 */
+	public Configuration setDateLibrary(DateLibrary dateLibrary) {
+		this.dateLibrary = dateLibrary;
+
+		return this;
+	}
+
+	/**
+	 * Returns if to enable Bean Validation.
+	 * 
+	 * @return If to enable Bean Validation
+	 */
+	public boolean isEnableBeanValidation() {
+		return this.enableBeanValidation;
+	}
+
+	/**
+	 * Sets if the Bean Validation has to be enabled.
+	 * 
+	 * @param enableBeanValidation
+	 *            If the Bean Validation has to be enabled
+	 * @return The instance of the Configuration
+	 */
+	public Configuration setEnableBeanValidation(boolean enableBeanValidation) {
+		this.enableBeanValidation = enableBeanValidation;
 
 		return this;
 	}

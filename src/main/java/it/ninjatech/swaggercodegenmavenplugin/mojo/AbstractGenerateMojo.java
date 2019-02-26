@@ -35,6 +35,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import io.swagger.codegen.DefaultGenerator;
 import it.ninjatech.swaggercodegenmavenplugin.configuration.Configuration;
 import it.ninjatech.swaggercodegenmavenplugin.configuration.DataTypeMapping;
+import it.ninjatech.swaggercodegenmavenplugin.configuration.DateLibrary;
 import it.ninjatech.swaggercodegenmavenplugin.core.Codegen;
 import it.ninjatech.swaggercodegenmavenplugin.core.GeneratorFactory;
 
@@ -73,6 +74,18 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	/** Data type mapping. */
 	@Parameter(required = false)
 	private DataTypeMapping dataTypeMapping;
+
+	/** Enable Java 8 */
+	@Parameter(required = true, defaultValue = "false")
+	private boolean enableJava8;
+
+	/** Date Library to use */
+	@Parameter(required = true, defaultValue = "JAVA8_LOCAL_DATE_TIME")
+	private DateLibrary dateLibrary;
+
+	/** Enable Bean Validation */
+	@Parameter(required = true, defaultValue = "true")
+	private boolean enableBeanValidation;
 
 	/**
 	 * Permits to the descending MOJO classes to apply custom settings to the Default Generator after the common setup.
@@ -121,7 +134,10 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 		      .setSourceFiles(this.sourceFiles)
 		      .setModelPackage(this.modelPackage)
 		      .setApiPackage(this.apiPackage)
-		      .setDataTypeMapping(this.dataTypeMapping);
+		      .setDataTypeMapping(this.dataTypeMapping)
+		      .setEnableJava8(this.enableJava8)
+		      .setDateLibrary(this.dateLibrary)
+		      .setEnableBeanValidation(this.enableBeanValidation);
 
 		return result;
 	}
