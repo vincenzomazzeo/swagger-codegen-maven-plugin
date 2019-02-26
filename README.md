@@ -103,7 +103,7 @@ The plugin requires only a bunch of configuration parameters:
 | modelPackage      | `String`          | Package of the Model classes                 |         | `false`  |
 | dataTypeMapping   | `DataTypeMapping` | Data Type Mapping for external Model classes |         | `false`  |
 | enableJava8      | `boolean`           | Enable Java 8 support | `false`  | `true`  |
-| dateLibrary       | `DateLibrary`      | Library to use for Date & Time | `JAVA8_LOCALDATE`        | `true`  |
+| dateLibrary       | `DateLibrary`      | Library to use for Date & Time | `JAVA8_LOCAL_DATE_TIME`        | `true`  |
 | enableBeanValidation | `boolean` | Enable the Validation framework | `true`        | `true`  |
 
 The `DataTypeMapping` has the following sections:
@@ -112,11 +112,11 @@ The `DataTypeMapping` has the following sections:
 - `packages` to specify a list of packages to scan. The usage of the '**' wildcard enables the sub packages scanning.
 - `externalResources` list of URL's linking to external YAML files containing the mapping.
 
-The `DateLibrary` can have one of the following value:
+The `DateLibrary` can have one of the following values:
 
 - `LEGACY`
 - `JAVA8`
-- `JAVA8_LOCALDATE`
+- `JAVA8_LOCAL_DATE_TIME`
 - `JODA`
 - `THREE_TEN`
 
