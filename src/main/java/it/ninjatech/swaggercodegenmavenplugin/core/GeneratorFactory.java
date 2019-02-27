@@ -142,6 +142,9 @@ public final class GeneratorFactory {
 		if (StringUtils.isNotBlank(configuration.getApiSuffix())) {
 			this.codegenConfigurator.addAdditionalProperty(Codegen.API_SUFFIX, configuration.getApiSuffix());
 		}
+		if (StringUtils.isNotBlank(configuration.getModelNameSuffix())) {
+			this.codegenConfigurator.addAdditionalProperty(CodegenConstants.MODEL_NAME_SUFFIX, configuration.getModelNameSuffix());
+		}
 
 		Map<String, TypeData> typeMapping = DataTypeMappingHandler.handle(this.log, configuration.getDataTypeMapping());
 		if (!typeMapping.isEmpty()) {

@@ -91,6 +91,10 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	@Parameter(required = false)
 	private String apiSuffix;
 
+	/** Model's Name Suffix */
+	@Parameter(required = false)
+	private String modelNameSuffix;
+
 	/**
 	 * Permits to the descending MOJO classes to apply custom settings to the Default Generator after the common setup.
 	 *
@@ -142,7 +146,8 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 		      .setEnableJava8(this.enableJava8)
 		      .setDateLibrary(this.dateLibrary)
 		      .setEnableBeanValidation(this.enableBeanValidation)
-		      .setApiSuffix(this.apiSuffix);
+		      .setApiSuffix(this.apiSuffix)
+		      .setModelNameSuffix(this.modelNameSuffix);
 
 		return result;
 	}

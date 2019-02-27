@@ -73,6 +73,9 @@ public class Configuration {
 	/** API's Suffix */
 	private String apiSuffix;
 
+	/** Model's Name Suffix */
+	private String modelNameSuffix;
+
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
@@ -88,6 +91,9 @@ public class Configuration {
 		result.append("\n    Enable Bean Validation -> ").append(this.enableBeanValidation);
 		if (this.apiSuffix != null) {
 			result.append("\n    API's Suffix -> ").append(this.apiSuffix);
+		}
+		if (this.modelNameSuffix != null) {
+			result.append("\n    Model's Name Suffix -> ").append(this.modelNameSuffix);
 		}
 
 		return result.toString();
@@ -331,6 +337,28 @@ public class Configuration {
 	 */
 	public Configuration setApiSuffix(String apiSuffix) {
 		this.apiSuffix = apiSuffix;
+
+		return this;
+	}
+
+	/**
+	 * Returns the Model's Name Suffix.
+	 * 
+	 * @return Model's Name Suffix
+	 */
+	public String getModelNameSuffix() {
+		return this.modelNameSuffix;
+	}
+
+	/**
+	 * Sets the Model's Name Suffix
+	 * 
+	 * @param modelNameSuffix
+	 *            Model's Name Suffix
+	 * @return The instance of the Configuration
+	 */
+	public Configuration setModelNameSuffix(String modelNameSuffix) {
+		this.modelNameSuffix = modelNameSuffix;
 
 		return this;
 	}

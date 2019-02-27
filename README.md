@@ -110,6 +110,7 @@ The plugin requires only a bunch of configuration parameters:
 | dateLibrary       | `DateLibrary`      | Library to use for Date & Time | `JAVA8_LOCAL_DATE_TIME`        | `true`  |
 | enableBeanValidation | `boolean` | Enable the Validation framework | `true`        | `true`  |
 | apiSuffix | `String` | Custom Suffix for API's Interfaces |         | `false`  |
+| modelNameSuffix | `String` | Custom Suffix for Model classes |         | `false`  |
 
 The `DataTypeMapping` has the following sections:
 
