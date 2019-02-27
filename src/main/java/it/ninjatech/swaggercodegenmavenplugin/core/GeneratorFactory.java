@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.maven.plugin.logging.Log;
+import org.codehaus.plexus.util.StringUtils;
 
 import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.CodegenConstants;
@@ -138,6 +139,9 @@ public final class GeneratorFactory {
 		this.codegenConfigurator.addAdditionalProperty(BeanValidationFeatures.USE_BEANVALIDATION, configuration.isEnableBeanValidation());
 		this.codegenConfigurator.addAdditionalProperty(AbstractJavaCodegen.JAVA8_MODE, configuration.isEnableJava8());
 		this.codegenConfigurator.addAdditionalProperty(Codegen.FORCE_JDK8_OFF, !configuration.isEnableJava8());
+		if (StringUtils.isNotBlank(configuration.getApiSuffix())) {
+			this.codegenConfigurator.addAdditionalProperty(Codegen.API_SUFFIX, configuration.getApiSuffix());
+		}
 
 		Map<String, TypeData> typeMapping = DataTypeMappingHandler.handle(this.log, configuration.getDataTypeMapping());
 		if (!typeMapping.isEmpty()) {

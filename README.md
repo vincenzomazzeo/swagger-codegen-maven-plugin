@@ -109,6 +109,7 @@ The plugin requires only a bunch of configuration parameters:
 | enableJava8      | `boolean`           | Enable Java 8 support | `false`  | `true`  |
 | dateLibrary       | `DateLibrary`      | Library to use for Date & Time | `JAVA8_LOCAL_DATE_TIME`        | `true`  |
 | enableBeanValidation | `boolean` | Enable the Validation framework | `true`        | `true`  |
+| apiSuffix | `String` | Custom Suffix for API's Interfaces |         | `false`  |
 
 The `DataTypeMapping` has the following sections:
 

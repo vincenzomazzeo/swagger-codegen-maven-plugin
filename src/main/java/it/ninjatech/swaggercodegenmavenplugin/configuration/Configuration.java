@@ -70,6 +70,9 @@ public class Configuration {
 	/** Enable Bean Validation */
 	private boolean enableBeanValidation;
 
+	/** API's Suffix */
+	private String apiSuffix;
+
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
@@ -83,6 +86,9 @@ public class Configuration {
 		result.append("\n    Enable Java 8 -> ").append(this.enableJava8);
 		result.append("\n    Date Library -> ").append(this.dateLibrary);
 		result.append("\n    Enable Bean Validation -> ").append(this.enableBeanValidation);
+		if (this.apiSuffix != null) {
+			result.append("\n    API's Suffix -> ").append(this.apiSuffix);
+		}
 
 		return result.toString();
 	}
@@ -303,6 +309,28 @@ public class Configuration {
 	 */
 	public Configuration setEnableBeanValidation(boolean enableBeanValidation) {
 		this.enableBeanValidation = enableBeanValidation;
+
+		return this;
+	}
+
+	/**
+	 * Returns the API's Suffix.
+	 * 
+	 * @return API's Suffix
+	 */
+	public String getApiSuffix() {
+		return this.apiSuffix;
+	}
+
+	/**
+	 * Sets the API's Suffix.
+	 * 
+	 * @param apiSuffix
+	 *            API's Suffix
+	 * @return The instance of the Configuration
+	 */
+	public Configuration setApiSuffix(String apiSuffix) {
+		this.apiSuffix = apiSuffix;
 
 		return this;
 	}

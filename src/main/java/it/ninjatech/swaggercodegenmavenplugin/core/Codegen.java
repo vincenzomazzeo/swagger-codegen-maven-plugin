@@ -57,7 +57,11 @@ import io.swagger.util.Json;
  */
 public final class Codegen extends SpringCodegen {
 
+	/** The Constant FORCE_JDK8_OFF. */
 	protected static final String FORCE_JDK8_OFF = "forceJdk8Off";
+
+	/** The Constant APIS_SUFFIX. */
+	protected static final String API_SUFFIX = "apiSuffix";
 
 	/** The Constant X_TYPE. */
 	private static final String X_TYPE = "x-type";
@@ -219,6 +223,20 @@ public final class Codegen extends SpringCodegen {
 		super.postProcessParameter(parameter);
 	}
 
+	@Override
+	public String toApiName(String name) {
+		String result = null;
+
+		if (this.additionalProperties.containsKey(API_SUFFIX)) {
+			result = name.length() == 0 ? "Default" : sanitizeName(name);
+			result = String.format("%s%s", camelize(result), this.additionalProperties.get(API_SUFFIX));
+		} else {
+			result = super.toApiName(name);
+		}
+
+		return result;
+	}
+
 	/**
 	 * Adds the import of the external Model classes.
 	 *
@@ -256,29 +274,31 @@ public final class Codegen extends SpringCodegen {
 	 *            Operation
 	 */
 	private void handleApiKeySecurityHeaders(CodegenOperation operation) {
-		List<CodegenSecurity> apiKeySecurityHeaders = operation.authMethods.stream().filter(e -> e.isApiKey && e.isKeyInHeader).collect(Collectors.toList());
-		if (!apiKeySecurityHeaders.isEmpty()) {
-			if (!operation.allParams.isEmpty()) {
-				operation.allParams.get(operation.allParams.size() - 1).hasMore = true;
+		if (operation.authMethods != null) {
+			List<CodegenSecurity> apiKeySecurityHeaders = operation.authMethods.stream().filter(e -> e.isApiKey && e.isKeyInHeader).collect(Collectors.toList());
+			if (!apiKeySecurityHeaders.isEmpty()) {
+				if (!operation.allParams.isEmpty()) {
+					operation.allParams.get(operation.allParams.size() - 1).hasMore = true;
+				}
+				for (CodegenSecurity apiKeySecurityHeader : apiKeySecurityHeaders) {
+					CodegenParameter apiKeySecurityHeaderParameter = new CodegenParameter();
+					operation.allParams.add(apiKeySecurityHeaderParameter);
+					operation.headerParams.add(apiKeySecurityHeaderParameter);
+					operation.requiredParams.add(apiKeySecurityHeaderParameter);
+					operation.hasParams = true;
+					operation.hasRequiredParams = true;
+					apiKeySecurityHeaderParameter.baseName = apiKeySecurityHeader.keyParamName;
+					apiKeySecurityHeaderParameter.description = apiKeySecurityHeader.keyParamName;
+					apiKeySecurityHeaderParameter.dataType = "String";
+					apiKeySecurityHeaderParameter.isHeaderParam = true;
+					apiKeySecurityHeaderParameter.isPrimitiveType = true;
+					apiKeySecurityHeaderParameter.isString = true;
+					apiKeySecurityHeaderParameter.paramName = apiKeySecurityHeader.name;
+					apiKeySecurityHeaderParameter.required = true;
+					apiKeySecurityHeaderParameter.hasMore = true;
+				}
+				operation.allParams.get(operation.allParams.size() - 1).hasMore = false;
 			}
-			for (CodegenSecurity apiKeySecurityHeader : apiKeySecurityHeaders) {
-				CodegenParameter apiKeySecurityHeaderParameter = new CodegenParameter();
-				operation.allParams.add(apiKeySecurityHeaderParameter);
-				operation.headerParams.add(apiKeySecurityHeaderParameter);
-				operation.requiredParams.add(apiKeySecurityHeaderParameter);
-				operation.hasParams = true;
-				operation.hasRequiredParams = true;
-				apiKeySecurityHeaderParameter.baseName = apiKeySecurityHeader.keyParamName;
-				apiKeySecurityHeaderParameter.description = apiKeySecurityHeader.keyParamName;
-				apiKeySecurityHeaderParameter.dataType = "String";
-				apiKeySecurityHeaderParameter.isHeaderParam = true;
-				apiKeySecurityHeaderParameter.isPrimitiveType = true;
-				apiKeySecurityHeaderParameter.isString = true;
-				apiKeySecurityHeaderParameter.paramName = apiKeySecurityHeader.name;
-				apiKeySecurityHeaderParameter.required = true;
-				apiKeySecurityHeaderParameter.hasMore = true;
-			}
-			operation.allParams.get(operation.allParams.size() - 1).hasMore = false;
 		}
 	}
 

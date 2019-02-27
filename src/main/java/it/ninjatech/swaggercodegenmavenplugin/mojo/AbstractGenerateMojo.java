@@ -87,6 +87,10 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	@Parameter(required = true, defaultValue = "true")
 	private boolean enableBeanValidation;
 
+	/** API's Suffix */
+	@Parameter(required = false)
+	private String apiSuffix;
+
 	/**
 	 * Permits to the descending MOJO classes to apply custom settings to the Default Generator after the common setup.
 	 *
@@ -137,7 +141,8 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 		      .setDataTypeMapping(this.dataTypeMapping)
 		      .setEnableJava8(this.enableJava8)
 		      .setDateLibrary(this.dateLibrary)
-		      .setEnableBeanValidation(this.enableBeanValidation);
+		      .setEnableBeanValidation(this.enableBeanValidation)
+		      .setApiSuffix(this.apiSuffix);
 
 		return result;
 	}
