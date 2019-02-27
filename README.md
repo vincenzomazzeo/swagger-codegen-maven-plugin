@@ -7,6 +7,10 @@ It is intended to be used in projects that only need Model and API generation.
 
 - Model classes generation
 - API interfaces generation
+- Fixes the bug
+- Fixes Swagger Codegen bug [#5614](https://github.com/swagger-api/swagger-codegen/issues/5614)
+- Fixes Swagger Codegen bug [#5898](https://github.com/swagger-api/swagger-codegen/issues/5898)
+> Note: Basic fix
 - Inheritance of the Model classes from external Model classes.
 
   It is possible for a Model class to extend an external class specifying the alias of the super class in the extension `x-superClass`:

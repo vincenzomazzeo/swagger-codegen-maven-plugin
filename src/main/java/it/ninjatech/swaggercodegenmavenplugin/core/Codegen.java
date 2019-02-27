@@ -26,6 +26,7 @@ package it.ninjatech.swaggercodegenmavenplugin.core;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.codehaus.plexus.util.StringUtils;
 
@@ -35,6 +36,7 @@ import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenParameter;
 import io.swagger.codegen.CodegenResponse;
+import io.swagger.codegen.CodegenSecurity;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.languages.SpringCodegen;
 import io.swagger.models.properties.Property;
@@ -173,6 +175,8 @@ public final class Codegen extends SpringCodegen {
 				}
 			}
 
+			handleApiKeySecurityHeaders(operation);
+
 			// In case of external types in body this is the only point where to add the
 			// imports.
 			if (operation.getHasBodyParam() && operation.bodyParam.vendorExtensions.containsKey(X_TYPE)) {
@@ -242,6 +246,39 @@ public final class Codegen extends SpringCodegen {
 
 		if (!importAlreadyPresent) {
 			imports.add(Collections.singletonMap("import", aliasFQN));
+		}
+	}
+
+	/**
+	 * Add ApiKey Security Headers to the parameters of the method
+	 * 
+	 * @param operation
+	 *            Operation
+	 */
+	private void handleApiKeySecurityHeaders(CodegenOperation operation) {
+		List<CodegenSecurity> apiKeySecurityHeaders = operation.authMethods.stream().filter(e -> e.isApiKey && e.isKeyInHeader).collect(Collectors.toList());
+		if (!apiKeySecurityHeaders.isEmpty()) {
+			if (!operation.allParams.isEmpty()) {
+				operation.allParams.get(operation.allParams.size() - 1).hasMore = true;
+			}
+			for (CodegenSecurity apiKeySecurityHeader : apiKeySecurityHeaders) {
+				CodegenParameter apiKeySecurityHeaderParameter = new CodegenParameter();
+				operation.allParams.add(apiKeySecurityHeaderParameter);
+				operation.headerParams.add(apiKeySecurityHeaderParameter);
+				operation.requiredParams.add(apiKeySecurityHeaderParameter);
+				operation.hasParams = true;
+				operation.hasRequiredParams = true;
+				apiKeySecurityHeaderParameter.baseName = apiKeySecurityHeader.keyParamName;
+				apiKeySecurityHeaderParameter.description = apiKeySecurityHeader.keyParamName;
+				apiKeySecurityHeaderParameter.dataType = "String";
+				apiKeySecurityHeaderParameter.isHeaderParam = true;
+				apiKeySecurityHeaderParameter.isPrimitiveType = true;
+				apiKeySecurityHeaderParameter.isString = true;
+				apiKeySecurityHeaderParameter.paramName = apiKeySecurityHeader.name;
+				apiKeySecurityHeaderParameter.required = true;
+				apiKeySecurityHeaderParameter.hasMore = true;
+			}
+			operation.allParams.get(operation.allParams.size() - 1).hasMore = false;
 		}
 	}
 
