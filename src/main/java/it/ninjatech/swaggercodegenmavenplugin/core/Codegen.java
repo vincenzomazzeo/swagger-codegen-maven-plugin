@@ -144,7 +144,7 @@ public final class Codegen extends SpringCodegen {
 				}
 				String superClass = superClasses.get(0);
 				addImport(objs, superClass);
-				model.parent = superClass;
+				model.parent = this.typeMapping.get(superClass);
 			}
 		}
 
