@@ -114,9 +114,14 @@ The plugin requires only a bunch of configuration parameters:
 
 The `DataTypeMapping` has the following sections:
 
-- `directMap` to define explicitly the external Model classes by specifying the alias and the fully qualified name.
+- `directMap` to explicitly define the external Model classes by specifying the alias and the fully qualified name.
 - `packages` to specify a list of packages to scan. The usage of the '**' wildcard enables the sub packages scanning.
 - `externalResources` list of URL's linking to external YAML files containing the mapping.
+
+> Note that:
+> - with the packages scanning is not possible to define an alias for the the classes. This means that the name of the class will be used as alias and in case of naming clash (classes with the same name in difference packages) only the latest found class is added. 
+> - the packages scanning doesn't work with packages of the project. To use classes of the project it is necessary to declare them with the direct mapping feature.
+> - the packages scanning requires that the project(s) containing the packages to be scanned must be added as dependency to the plugin.
 
 The `DateLibrary` can have one of the following values:
 
@@ -125,12 +130,6 @@ The `DateLibrary` can have one of the following values:
 - `JAVA8_LOCAL_DATE_TIME`
 - `JODA`
 - `THREE_TEN`
-
-> Note that:
-> - with the packages scanning is not possible to define an alias for the the classes. This means that the name of the class will be used as alias and in case of naming clash (classes with the same name in difference packages) only the latest found class is added. 
-> - the packages scanning doesn't work with packages of the project. To use classes of the project it is necessary to declare them with the direct mapping feature.
-> - the packages scanning requires that the project(s) containing the packages to be scanned must be added as dependency to the plugin.
-
 
 ### Example
 
