@@ -70,7 +70,7 @@ public class DataTypeMappingHandler {
 			handle(log, dataTypeMapping, result);
 		}
 		else {
-			Collections.emptyMap();
+			result = Collections.emptyMap();
 		}
 
 		return result;
