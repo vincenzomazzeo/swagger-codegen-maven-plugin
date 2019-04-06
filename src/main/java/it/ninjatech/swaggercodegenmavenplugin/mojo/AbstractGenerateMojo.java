@@ -87,6 +87,10 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	@Parameter(required = true, defaultValue = "true")
 	private boolean enableBeanValidation;
 
+	/** Security Headers as method arguments */
+	@Parameter(required = true, defaultValue = "true")
+	private boolean securityHeadersAsArguments;
+
 	/** API's Suffix */
 	@Parameter(required = false)
 	private String apiSuffix;
@@ -122,8 +126,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 
 				defaultGenerator.generate();
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new MojoFailureException("Failure", e);
 		}
 	}
@@ -146,6 +149,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 		      .setEnableJava8(this.enableJava8)
 		      .setDateLibrary(this.dateLibrary)
 		      .setEnableBeanValidation(this.enableBeanValidation)
+		      .setSecurityHeadersAsArguments(this.securityHeadersAsArguments)
 		      .setApiSuffix(this.apiSuffix)
 		      .setModelNameSuffix(this.modelNameSuffix);
 

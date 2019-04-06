@@ -139,6 +139,7 @@ public final class GeneratorFactory {
 		this.codegenConfigurator.addAdditionalProperty(BeanValidationFeatures.USE_BEANVALIDATION, configuration.isEnableBeanValidation());
 		this.codegenConfigurator.addAdditionalProperty(AbstractJavaCodegen.JAVA8_MODE, configuration.isEnableJava8());
 		this.codegenConfigurator.addAdditionalProperty(Codegen.FORCE_JDK8_OFF, !configuration.isEnableJava8());
+		this.codegenConfigurator.addAdditionalProperty(Codegen.SECURITY_HEADERS_AS_ARGUMENTS, configuration.isSecurityHeadersAsArguments());
 		if (StringUtils.isNotBlank(configuration.getApiSuffix())) {
 			this.codegenConfigurator.addAdditionalProperty(Codegen.API_SUFFIX, configuration.getApiSuffix());
 		}

@@ -70,6 +70,9 @@ public class Configuration {
 	/** Enable Bean Validation */
 	private boolean enableBeanValidation;
 
+	/** Add Security Headers as method arguments */
+	private boolean securityHeadersAsArguments;
+
 	/** API's Suffix */
 	private String apiSuffix;
 
@@ -89,6 +92,7 @@ public class Configuration {
 		result.append("\n    Enable Java 8 -> ").append(this.enableJava8);
 		result.append("\n    Date Library -> ").append(this.dateLibrary);
 		result.append("\n    Enable Bean Validation -> ").append(this.enableBeanValidation);
+		result.append("\n    Security Headers as Arguments -> ").append(this.securityHeadersAsArguments);
 		if (this.apiSuffix != null) {
 			result.append("\n    API's Suffix -> ").append(this.apiSuffix);
 		}
@@ -315,6 +319,28 @@ public class Configuration {
 	 */
 	public Configuration setEnableBeanValidation(boolean enableBeanValidation) {
 		this.enableBeanValidation = enableBeanValidation;
+
+		return this;
+	}
+
+	/**
+	 * Returns if to add security headers as arguments of the method.
+	 * 
+	 * @return If to add Security Headers as method arguments
+	 */
+	public boolean isSecurityHeadersAsArguments() {
+		return this.securityHeadersAsArguments;
+	}
+
+	/**
+	 * Sets if security headers must be added as method arguments.
+	 * 
+	 * @param securityHeadersAsArguments
+	 *            If Security Headers must be added as method arguments
+	 * @return The instance of the Configuration
+	 */
+	public Configuration setSecurityHeadersAsArguments(boolean securityHeadersAsArguments) {
+		this.securityHeadersAsArguments = securityHeadersAsArguments;
 
 		return this;
 	}

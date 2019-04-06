@@ -63,6 +63,9 @@ public final class Codegen extends SpringCodegen {
 	/** The Constant APIS_SUFFIX. */
 	protected static final String API_SUFFIX = "apiSuffix";
 
+	/** The Constant ADD_SECURITY_HEADERS_AS_ARGUMENTS */
+	protected static final String SECURITY_HEADERS_AS_ARGUMENTS = "securityHeadersAsArguments";
+
 	/** The Constant X_TYPE. */
 	private static final String X_TYPE = "x-type";
 
@@ -124,8 +127,7 @@ public final class Codegen extends SpringCodegen {
 
 		if ("string".equalsIgnoreCase(swaggerType) && property.getVendorExtensions().containsKey(X_TYPE)) {
 			swaggerType = (String) property.getVendorExtensions().get(X_TYPE);
-		}
-		else if ("string".equalsIgnoreCase(swaggerType) && property.getFormat() != null && property.getFormat().startsWith("x-")) {
+		} else if ("string".equalsIgnoreCase(swaggerType) && property.getFormat() != null && property.getFormat().startsWith("x-")) {
 			swaggerType = property.getFormat().substring("x-".length());
 		}
 
@@ -214,8 +216,7 @@ public final class Codegen extends SpringCodegen {
 						parameter.vendorExtensions.putAll(vendorExtensions);
 					}
 				}
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 		}
@@ -274,7 +275,7 @@ public final class Codegen extends SpringCodegen {
 	 *            Operation
 	 */
 	private void handleApiKeySecurityHeaders(CodegenOperation operation) {
-		if (operation.authMethods != null) {
+		if (operation.authMethods != null && (boolean) this.additionalProperties.get(SECURITY_HEADERS_AS_ARGUMENTS)) {
 			List<CodegenSecurity> apiKeySecurityHeaders = operation.authMethods.stream().filter(e -> e.isApiKey && e.isKeyInHeader).collect(Collectors.toList());
 			if (!apiKeySecurityHeaders.isEmpty()) {
 				if (!operation.allParams.isEmpty()) {
