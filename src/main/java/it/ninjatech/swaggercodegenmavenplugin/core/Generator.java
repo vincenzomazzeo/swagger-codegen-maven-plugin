@@ -42,7 +42,7 @@ public class Generator extends DefaultGenerator {
 	@Override
 	public String getFullTemplateFile(CodegenConfig config, String templateFile) {
 		if (templateFile.equals(config.apiTemplateFiles().keySet().stream().findFirst().get())) {
-			ClassPathResource mustache = new ClassPathResource("swaggerCodegenMavenPluginApi.mustache");
+			ClassPathResource mustache = new ClassPathResource("swagger-codegen-maven-plugin-api.mustache");
 			return mustache.getPath();
 		}
 		return super.getFullTemplateFile(config, templateFile);
