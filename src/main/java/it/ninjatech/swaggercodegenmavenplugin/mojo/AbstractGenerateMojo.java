@@ -46,7 +46,7 @@ import it.ninjatech.swaggercodegenmavenplugin.core.GeneratorFactory;
  * </p>
  * 
  * @author Vincenzo Mazzeo
- * @version 1.0
+ * @version 2.0
  * @since 1.0.0
  */
 public abstract class AbstractGenerateMojo extends AbstractMojo {
@@ -90,6 +90,10 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	/** Security Headers as method arguments */
 	@Parameter(required = true, defaultValue = "true")
 	private boolean securityHeadersAsArguments;
+
+	/** Base Path as Root */
+	@Parameter(required = true, defaultValue = "true")
+	private boolean basePathAsRoot;
 
 	/** API's Suffix */
 	@Parameter(required = false)
@@ -150,6 +154,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 		      .setDateLibrary(this.dateLibrary)
 		      .setEnableBeanValidation(this.enableBeanValidation)
 		      .setSecurityHeadersAsArguments(this.securityHeadersAsArguments)
+		      .setBasePathAsRoot(this.basePathAsRoot)
 		      .setApiSuffix(this.apiSuffix)
 		      .setModelNameSuffix(this.modelNameSuffix);
 

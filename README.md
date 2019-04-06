@@ -10,6 +10,7 @@ It is intended to be used in projects that only need Model and API generation.
 - Fixed Swagger Codegen bug [#5614](https://github.com/swagger-api/swagger-codegen/issues/5614)
 - Fixed Swagger Codegen bug [#5898](https://github.com/swagger-api/swagger-codegen/issues/5898)
   > Note: Basic fix
+- Fixed Swagger Codegen bug [#3720](https://github.com/swagger-api/swagger-codegen/issues/3720)
 - Inheritance of the Model classes from external Model classes.
 
   It is possible for a Model class to extend an external class specifying the alias of the super class in the extension `x-superClass`:
@@ -74,7 +75,7 @@ Run Build:
 
 ## Releases
 
-The current release is **1.0.0**.
+The current release is **1.1.0**.
 
 ## Basic usage
 
@@ -109,6 +110,7 @@ The plugin requires only a bunch of configuration parameters:
 | dateLibrary       | `DateLibrary`      | Library to use for Date & Time | `JAVA8_LOCAL_DATE_TIME`        | `true`  |
 | enableBeanValidation | `boolean` | Enables the Validation framework | `true`        | `true`  |
 | securityHeadersAsArguments | `boolean` | Adds the Security Headers as method parameters | `true`        | `true`  |
+| basePathAsRoot | `boolean` | Sets the BasePath property as root (RequestMapping) of the interface | `true`        | `true`  |
 | apiSuffix | `String` | Custom Suffix for API's Interfaces |         | `false`  |
 | modelNameSuffix | `String` | Custom Suffix for Model classes |         | `false`  |
 

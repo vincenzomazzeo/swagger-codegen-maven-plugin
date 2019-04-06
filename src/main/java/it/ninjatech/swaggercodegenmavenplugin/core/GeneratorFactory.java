@@ -46,7 +46,7 @@ import it.ninjatech.swaggercodegenmavenplugin.configuration.Configuration;
  * </p>
  * 
  * @author Vincenzo Mazzeo
- * @version 1.0
+ * @version 2.0
  * @since 1.0.0
  */
 public final class GeneratorFactory {
@@ -101,14 +101,14 @@ public final class GeneratorFactory {
 	 *            SWAGGER source
 	 * @return Default Generator
 	 */
-	public DefaultGenerator make(URL source) {
-		DefaultGenerator result = null;
+	public Generator make(URL source) {
+		Generator result = null;
 
 		this.codegenConfigurator.setInputSpec(source.toString());
 
 		ClientOptInput input = this.codegenConfigurator.toClientOptInput();
 
-		result = new DefaultGenerator();
+		result = new Generator();
 		result.opts(input);
 		result.setGeneratorPropertyDefault(CodegenConstants.APIS, Boolean.FALSE.toString());
 		result.setGeneratorPropertyDefault(CodegenConstants.MODELS, Boolean.FALSE.toString());
@@ -140,6 +140,7 @@ public final class GeneratorFactory {
 		this.codegenConfigurator.addAdditionalProperty(AbstractJavaCodegen.JAVA8_MODE, configuration.isEnableJava8());
 		this.codegenConfigurator.addAdditionalProperty(Codegen.FORCE_JDK8_OFF, !configuration.isEnableJava8());
 		this.codegenConfigurator.addAdditionalProperty(Codegen.SECURITY_HEADERS_AS_ARGUMENTS, configuration.isSecurityHeadersAsArguments());
+		this.codegenConfigurator.addAdditionalProperty(Codegen.BASE_PATH_AS_ROOT, configuration.isBasePathAsRoot());
 		if (StringUtils.isNotBlank(configuration.getApiSuffix())) {
 			this.codegenConfigurator.addAdditionalProperty(Codegen.API_SUFFIX, configuration.getApiSuffix());
 		}

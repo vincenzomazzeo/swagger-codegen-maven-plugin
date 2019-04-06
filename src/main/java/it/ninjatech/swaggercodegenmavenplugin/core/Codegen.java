@@ -39,6 +39,7 @@ import io.swagger.codegen.CodegenResponse;
 import io.swagger.codegen.CodegenSecurity;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.languages.SpringCodegen;
+import io.swagger.models.Swagger;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.PropertyBuilder;
 import io.swagger.models.properties.PropertyBuilder.PropertyId;
@@ -52,7 +53,7 @@ import io.swagger.util.Json;
  * </p>
  * 
  * @author Vincenzo Mazzeo
- * @version 1.0
+ * @version 2.0
  * @since 1.0.0
  */
 public final class Codegen extends SpringCodegen {
@@ -65,6 +66,9 @@ public final class Codegen extends SpringCodegen {
 
 	/** The Constant ADD_SECURITY_HEADERS_AS_ARGUMENTS */
 	protected static final String SECURITY_HEADERS_AS_ARGUMENTS = "securityHeadersAsArguments";
+
+	/** The Constant BASE_PATH_AS_ROOT */
+	protected static final String BASE_PATH_AS_ROOT = "basePathAsRoot";
 
 	/** The Constant X_TYPE. */
 	private static final String X_TYPE = "x-type";
@@ -191,6 +195,8 @@ public final class Codegen extends SpringCodegen {
 			}
 		}
 
+		handleBasePathAsRoot(objs);
+
 		return super.postProcessOperations(objs);
 	}
 
@@ -236,6 +242,16 @@ public final class Codegen extends SpringCodegen {
 		}
 
 		return result;
+	}
+
+	@Override
+	public void preprocessSwagger(Swagger swagger) {
+		super.preprocessSwagger(swagger);
+
+		if ((boolean) this.additionalProperties.get(BASE_PATH_AS_ROOT)
+		    && StringUtils.isBlank(swagger.getBasePath())) {
+			this.additionalProperties.put(BASE_PATH_AS_ROOT, false);
+		}
 	}
 
 	/**
@@ -301,6 +317,16 @@ public final class Codegen extends SpringCodegen {
 				operation.allParams.get(operation.allParams.size() - 1).hasMore = false;
 			}
 		}
+	}
+
+	/**
+	 * Handles the BasePathAsRoot parameter.
+	 * 
+	 * @param objs
+	 *            Objects
+	 */
+	private void handleBasePathAsRoot(Map<String, Object> objs) {
+		objs.put(BASE_PATH_AS_ROOT, this.additionalProperties.get(BASE_PATH_AS_ROOT));
 	}
 
 }

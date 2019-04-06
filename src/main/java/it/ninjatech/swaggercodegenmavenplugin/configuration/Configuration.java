@@ -35,7 +35,7 @@ import io.swagger.codegen.languages.AbstractJavaCodegen;
  * </p>
  *
  * @author Vincenzo Mazzeo
- * @version 1.0
+ * @version 2.0
  * @since 1.0.0
  */
 public class Configuration {
@@ -73,6 +73,9 @@ public class Configuration {
 	/** Add Security Headers as method arguments */
 	private boolean securityHeadersAsArguments;
 
+	/** Base Path used as Root */
+	private boolean basePathAsRoot;
+
 	/** API's Suffix */
 	private String apiSuffix;
 
@@ -93,6 +96,7 @@ public class Configuration {
 		result.append("\n    Date Library -> ").append(this.dateLibrary);
 		result.append("\n    Enable Bean Validation -> ").append(this.enableBeanValidation);
 		result.append("\n    Security Headers as Arguments -> ").append(this.securityHeadersAsArguments);
+		result.append("\n    Base Path as Root -> ").append(this.basePathAsRoot);
 		if (this.apiSuffix != null) {
 			result.append("\n    API's Suffix -> ").append(this.apiSuffix);
 		}
@@ -341,6 +345,28 @@ public class Configuration {
 	 */
 	public Configuration setSecurityHeadersAsArguments(boolean securityHeadersAsArguments) {
 		this.securityHeadersAsArguments = securityHeadersAsArguments;
+
+		return this;
+	}
+
+	/**
+	 * Returns if to use Base Path value as Root.
+	 * 
+	 * @return If to use Base Path value as Root
+	 */
+	public boolean isBasePathAsRoot() {
+		return this.basePathAsRoot;
+	}
+
+	/**
+	 * Sets if Base Path must be used as root.
+	 * 
+	 * @param basePathAsRoot
+	 *            If Base Path must be used as root
+	 * @return The instance of the Configuration
+	 */
+	public Configuration setBasePathAsRoot(boolean basePathAsRoot) {
+		this.basePathAsRoot = basePathAsRoot;
 
 		return this;
 	}
