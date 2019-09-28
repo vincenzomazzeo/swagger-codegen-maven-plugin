@@ -127,6 +127,7 @@ public class DataTypeMappingHandler {
 			Set<BeanDefinition> components = scanner.findCandidateComponents(package_);
 			for (BeanDefinition component : components) {
 				TypeData typeData = getTypeData(component.getBeanClassName());
+                log.info(String.format("    %s -> %s", typeData.getName(), typeData));
 				typeMap.put(typeData.getName(), typeData);
 			}
 		}

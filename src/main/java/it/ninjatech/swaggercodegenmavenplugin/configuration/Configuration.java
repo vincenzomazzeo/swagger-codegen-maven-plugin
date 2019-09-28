@@ -40,6 +40,9 @@ import io.swagger.codegen.languages.AbstractJavaCodegen;
  */
 public class Configuration {
 
+    /** ID */
+    private final String id;
+
 	/** AbstractJavaCodegen class to use for generating code. */
 	private Class<? extends AbstractJavaCodegen> javaCodegen;
 
@@ -82,6 +85,16 @@ public class Configuration {
 	/** Model's Name Suffix */
 	private String modelNameSuffix;
 
+    /**
+     * Instantiates a new configuration.
+     *
+     * @param id
+     *            configuration ID
+     */
+    public Configuration(String id) {
+        this.id = id;
+    }
+
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
@@ -108,10 +121,19 @@ public class Configuration {
 	}
 
 	/**
-	 * Returns the AbstractJavaCodegen.
-	 *
-	 * @return AbstractJavaCodegen
-	 */
+     * Returns the id.
+     *
+     * @return the id
+     */
+    public String getId() {
+        return this.id;
+    }
+
+    /**
+     * Returns the AbstractJavaCodegen.
+     *
+     * @return AbstractJavaCodegen
+     */
 	public Class<? extends AbstractJavaCodegen> getJavaCodegen() {
 		return javaCodegen;
 	}

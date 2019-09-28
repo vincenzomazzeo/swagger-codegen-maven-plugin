@@ -51,6 +51,10 @@ import it.ninjatech.swaggercodegenmavenplugin.core.GeneratorFactory;
  */
 public abstract class AbstractGenerateMojo extends AbstractMojo {
 
+    /** ID. */
+    @Parameter(required = true, defaultValue = "false")
+    private String id;
+
 	/** Verbose output. */
 	@Parameter(required = false, defaultValue = "false")
 	private boolean verbose;
@@ -141,7 +145,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	 * @return {@link Configuration}
 	 */
 	private Configuration getConfiguration() {
-		Configuration result = new Configuration();
+        Configuration result = new Configuration(this.id);
 
 		result.setJavaCodegen(Codegen.class)
 		      .setVerbose(this.verbose)

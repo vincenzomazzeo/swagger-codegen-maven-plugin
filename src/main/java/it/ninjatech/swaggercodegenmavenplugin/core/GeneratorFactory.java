@@ -25,6 +25,7 @@ package it.ninjatech.swaggercodegenmavenplugin.core;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -51,8 +52,8 @@ import it.ninjatech.swaggercodegenmavenplugin.configuration.Configuration;
  */
 public final class GeneratorFactory {
 
-	/** Singleton instance. */
-	private static GeneratorFactory instance;
+    /** Instances by ID. */
+    private final static Map<String, GeneratorFactory> GENERATOR_FACTORIES = new HashMap<>();
 
 	/**
 	 * Returns the Singleton instance.
@@ -66,7 +67,15 @@ public final class GeneratorFactory {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	public static GeneratorFactory getInstance(Log log, Configuration configuration) throws IOException {
-		return instance == null ? instance = new GeneratorFactory(log, configuration) : instance;
+        GeneratorFactory result = null;
+
+        result = GENERATOR_FACTORIES.get(configuration.getId());
+        if (result == null) {
+            result = new GeneratorFactory(log, configuration);
+            GENERATOR_FACTORIES.put(configuration.getId(), result);
+        }
+
+        return result;
 	}
 
 	/** The log. */
