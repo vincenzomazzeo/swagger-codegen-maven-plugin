@@ -62,7 +62,7 @@ It is intended to be used in projects that only need Model and API generation.
 
 - Definition of the name of the API interface name
   
-  It is possible to define the name for the class of an API using the extension `x-nt-interface-name`:
+  It is possible to define the name of the interface for an API using the extension `x-nt-interface-name`:
   ```
     /testGetModel/page:
       x-nt-interface-name: MyClassName

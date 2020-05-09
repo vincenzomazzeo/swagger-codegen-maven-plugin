@@ -78,7 +78,7 @@ public final class Codegen extends SpringCodegen {
     /** The Constant X_SUPER_CLASS. */
     private static final String X_SUPER_CLASS = "x-nt-super-class";
 
-    /** The Constant X_CLASS_NAME. */
+    /** The Constant X_INTERFACE_NAME. */
     private static final String X_INTERFACE_NAME = "x-nt-interface-name";
 
     /*
