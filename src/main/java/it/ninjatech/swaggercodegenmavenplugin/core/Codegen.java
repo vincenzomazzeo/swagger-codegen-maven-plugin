@@ -55,7 +55,7 @@ import io.swagger.util.Json;
  * </p>
  * 
  * @author Vincenzo Mazzeo
- * @version 2.0
+ * @version 3.0
  * @since 1.0.0
  */
 public final class Codegen extends SpringCodegen {
