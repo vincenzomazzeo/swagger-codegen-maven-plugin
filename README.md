@@ -13,17 +13,17 @@ It is intended to be used in projects that only need Model and API generation.
 - Fixed Swagger Codegen bug [#3720](https://github.com/swagger-api/swagger-codegen/issues/3720)
 - Inheritance of the Model classes from external Model classes.
 
-  It is possible for a Model class to extend an external class specifying the alias of the super class in the extension `x-superClass`:
+  It is possible for a Model class to extend an external class specifying the alias of the super class in the extension `x-nt-super-class`:
   ```
     TestModel:
-      x-superClass:
+      x-nt-super-class:
         - AbstractModel
       type: object
       properties: [...]
   ```
 - Usage of external Model classes as fields of the internal Model and as parameters/response of the API's.
 
-  It is possible for a Model class to have one or more external classes as field type by specifying the type of the field as `string` and the alias of the external type in the extension `x-type`:
+  It is possible for a Model class to have one or more external classes as field type by specifying the type of the field as `string` and the alias of the external type in the extension `x-nt-type`:
   ```
     TestModel:
       [...]
@@ -32,12 +32,12 @@ It is intended to be used in projects that only need Model and API generation.
           type: string
         page:
           type: string
-          x-type: NTPage
+          x-nt-type: NTPage
         otherPage:
           type: string
-          x-type: NTPage
+          x-nt-type: NTPage
   ```
-  It is possible for an API to use an external class as parameter/response by specifying the type as `string` and the alias of the external type in the extension `x-type`:
+  It is possible for an API to use an external class as parameter/response by specifying the type as `string` and the alias of the external type in the extension `x-nt-type`:
   ```
     /testGetModel/page:
       post:
@@ -46,18 +46,27 @@ It is intended to be used in projects that only need Model and API generation.
             in: body
             schema:
               type: string
-              x-type: NTPage
+              x-nt-type: NTPage
         responses:
           '200':
             description: successful operation
             schema:
               type: string
-              x-type: NTPage
+              x-nt-type: NTPage
         operationId: testGetPage
         consumes:
           - application/json
         produces:
           - application/json
+  ```
+
+- Definition of the name of the API interface name
+  
+  It is possible to define the name for the class of an API using the extension `x-nt-interface-name`:
+  ```
+    /testGetModel/page:
+      x-nt-interface-name: MyClassName
+      [...]
   ```
 
 ## Build
@@ -75,7 +84,7 @@ Run Build:
 
 ## Releases
 
-The current release is **1.1.0**.
+The current release is **1.3.0**.
 
 ## Basic usage
 

@@ -39,6 +39,8 @@ import io.swagger.codegen.CodegenResponse;
 import io.swagger.codegen.CodegenSecurity;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.languages.SpringCodegen;
+import io.swagger.models.Model;
+import io.swagger.models.Operation;
 import io.swagger.models.Swagger;
 import io.swagger.models.properties.Property;
 import io.swagger.models.properties.PropertyBuilder;
@@ -71,10 +73,13 @@ public final class Codegen extends SpringCodegen {
     protected static final String BASE_PATH_AS_ROOT = "basePathAsRoot";
 
     /** The Constant X_TYPE. */
-    private static final String X_TYPE = "x-type";
+    private static final String X_TYPE = "x-nt-type";
 
     /** The Constant X_SUPER_CLASS. */
-    private static final String X_SUPER_CLASS = "x-superClass";
+    private static final String X_SUPER_CLASS = "x-nt-super-class";
+
+    /** The Constant X_CLASS_NAME. */
+    private static final String X_INTERFACE_NAME = "x-nt-interface-name";
 
     /*
      * (non-Javadoc)
@@ -252,6 +257,28 @@ public final class Codegen extends SpringCodegen {
             && StringUtils.isBlank(swagger.getBasePath())) {
             this.additionalProperties.put(BASE_PATH_AS_ROOT, false);
         }
+    }
+
+    @Override
+    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
+        CodegenOperation result = null;
+
+        if (swagger.getPath(path).getVendorExtensions().containsKey(X_INTERFACE_NAME)) {
+            operation.setVendorExtension(X_INTERFACE_NAME, swagger.getPath(path).getVendorExtensions().get(X_INTERFACE_NAME));
+        }
+        result = super.fromOperation(path, httpMethod, operation, definitions, swagger);
+
+        return result;
+    }
+
+    @Override
+    public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
+        super.addOperationToGroup(tag,
+                                  co.vendorExtensions.containsKey(X_INTERFACE_NAME) ? (String) co.vendorExtensions.get(X_INTERFACE_NAME)
+                                                                                    : resourcePath,
+                                  operation,
+                                  co,
+                                  operations);
     }
 
     /**
