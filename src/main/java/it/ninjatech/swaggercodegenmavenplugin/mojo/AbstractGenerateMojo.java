@@ -55,114 +55,114 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
     @Parameter(required = true, defaultValue = "false")
     private String id;
 
-	/** Verbose output. */
-	@Parameter(required = false, defaultValue = "false")
-	private boolean verbose;
+    /** Verbose output. */
+    @Parameter(required = false, defaultValue = "false")
+    private boolean verbose;
 
-	/** Output folder. */
-	@Parameter(required = true)
-	private File outputFolder;
+    /** Output folder. */
+    @Parameter(required = true)
+    private File outputFolder;
 
-	/** Source SWAGGER files to elaborate. */
-	@Parameter(required = true)
-	private List<URL> sourceFiles;
+    /** Source SWAGGER files to elaborate. */
+    @Parameter(required = true)
+    private List<URL> sourceFiles;
 
-	/** Package for Model classes. */
-	@Parameter(required = false)
-	private String modelPackage;
+    /** Package for Model classes. */
+    @Parameter(required = false)
+    private String modelPackage;
 
-	/** Package for API interfaces. */
-	@Parameter(required = false)
-	private String apiPackage;
+    /** Package for API interfaces. */
+    @Parameter(required = false)
+    private String apiPackage;
 
-	/** Data type mapping. */
-	@Parameter(required = false)
-	private DataTypeMapping dataTypeMapping;
+    /** Data type mapping. */
+    @Parameter(required = false)
+    private DataTypeMapping dataTypeMapping;
 
-	/** Enable Java 8 */
-	@Parameter(required = true, defaultValue = "false")
-	private boolean enableJava8;
+    /** Enable Java 8 */
+    @Parameter(required = true, defaultValue = "false")
+    private boolean enableJava8;
 
-	/** Date Library to use */
-	@Parameter(required = true, defaultValue = "JAVA8_LOCAL_DATE_TIME")
-	private DateLibrary dateLibrary;
+    /** Date Library to use */
+    @Parameter(required = true, defaultValue = "JAVA8_LOCAL_DATE_TIME")
+    private DateLibrary dateLibrary;
 
-	/** Enable Bean Validation */
-	@Parameter(required = true, defaultValue = "true")
-	private boolean enableBeanValidation;
+    /** Enable Bean Validation */
+    @Parameter(required = true, defaultValue = "true")
+    private boolean enableBeanValidation;
 
-	/** Security Headers as method arguments */
-	@Parameter(required = true, defaultValue = "true")
-	private boolean securityHeadersAsArguments;
+    /** Security Headers as method arguments */
+    @Parameter(required = true, defaultValue = "true")
+    private boolean securityHeadersAsArguments;
 
-	/** Base Path as Root */
-	@Parameter(required = true, defaultValue = "true")
-	private boolean basePathAsRoot;
+    /** Base Path as Root */
+    @Parameter(required = true, defaultValue = "true")
+    private boolean basePathAsRoot;
 
-	/** API's Suffix */
-	@Parameter(required = false)
-	private String apiSuffix;
+    /** API's Suffix */
+    @Parameter(required = false)
+    private String apiSuffix;
 
-	/** Model's Name Suffix */
-	@Parameter(required = false)
-	private String modelNameSuffix;
+    /** Model's Name Suffix */
+    @Parameter(required = false)
+    private String modelNameSuffix;
 
-	/**
-	 * Permits to the descending MOJO classes to apply custom settings to the Default Generator after the common setup.
-	 *
-	 * @param defaultGenerator
-	 *            Default Generator
-	 */
-	protected abstract void postDefaultGeneratorSetup(DefaultGenerator defaultGenerator);
+    /**
+     * Permits to the descending MOJO classes to apply custom settings to the Default Generator after the common setup.
+     *
+     * @param defaultGenerator
+     *            Default Generator
+     */
+    protected abstract void postDefaultGeneratorSetup(DefaultGenerator defaultGenerator);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.maven.plugin.Mojo#execute()
-	 */
-	@Override
-	public void execute() throws MojoExecutionException, MojoFailureException {
-		try {
-			GeneratorFactory generatorFactory = GeneratorFactory.getInstance(getLog(), getConfiguration());
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.maven.plugin.Mojo#execute()
+     */
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        try {
+            GeneratorFactory generatorFactory = GeneratorFactory.getInstance(getLog(), getConfiguration());
 
-			for (URL sourceFile : this.sourceFiles) {
-				getLog().info(String.format("Processing %s", sourceFile.toString()));
+            for (URL sourceFile : this.sourceFiles) {
+                getLog().info(String.format("Processing %s", sourceFile.toString()));
 
-				DefaultGenerator defaultGenerator = generatorFactory.make(sourceFile);
+                DefaultGenerator defaultGenerator = generatorFactory.make(sourceFile);
 
-				postDefaultGeneratorSetup(defaultGenerator);
+                postDefaultGeneratorSetup(defaultGenerator);
 
-				defaultGenerator.generate();
-			}
-		} catch (Exception e) {
-			throw new MojoFailureException("Failure", e);
-		}
-	}
+                defaultGenerator.generate();
+            }
+        } catch (Exception e) {
+            throw new MojoFailureException("Failure", e);
+        }
+    }
 
-	/**
-	 * Returns the {@link Configuration} filled with the plug-in input parameters.
-	 *
-	 * @return {@link Configuration}
-	 */
-	private Configuration getConfiguration() {
+    /**
+     * Returns the {@link Configuration} filled with the plug-in input parameters.
+     *
+     * @return {@link Configuration}
+     */
+    private Configuration getConfiguration() {
         Configuration result = new Configuration(this.id);
 
-		result.setJavaCodegen(Codegen.class)
-		      .setVerbose(this.verbose)
-		      .setOutputFolder(this.outputFolder)
-		      .setSourceFiles(this.sourceFiles)
-		      .setModelPackage(this.modelPackage)
-		      .setApiPackage(this.apiPackage)
-		      .setDataTypeMapping(this.dataTypeMapping)
-		      .setEnableJava8(this.enableJava8)
-		      .setDateLibrary(this.dateLibrary)
-		      .setEnableBeanValidation(this.enableBeanValidation)
-		      .setSecurityHeadersAsArguments(this.securityHeadersAsArguments)
-		      .setBasePathAsRoot(this.basePathAsRoot)
-		      .setApiSuffix(this.apiSuffix)
-		      .setModelNameSuffix(this.modelNameSuffix);
+        result.setJavaCodegen(Codegen.class)
+              .setVerbose(this.verbose)
+              .setOutputFolder(this.outputFolder)
+              .setSourceFiles(this.sourceFiles)
+              .setModelPackage(this.modelPackage)
+              .setApiPackage(this.apiPackage)
+              .setDataTypeMapping(this.dataTypeMapping)
+              .setEnableJava8(this.enableJava8)
+              .setDateLibrary(this.dateLibrary)
+              .setEnableBeanValidation(this.enableBeanValidation)
+              .setSecurityHeadersAsArguments(this.securityHeadersAsArguments)
+              .setBasePathAsRoot(this.basePathAsRoot)
+              .setApiSuffix(this.apiSuffix)
+              .setModelNameSuffix(this.modelNameSuffix);
 
-		return result;
-	}
+        return result;
+    }
 
 }

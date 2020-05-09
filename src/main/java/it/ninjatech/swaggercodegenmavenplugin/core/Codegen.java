@@ -58,275 +58,275 @@ import io.swagger.util.Json;
  */
 public final class Codegen extends SpringCodegen {
 
-	/** The Constant FORCE_JDK8_OFF. */
-	protected static final String FORCE_JDK8_OFF = "forceJdk8Off";
+    /** The Constant FORCE_JDK8_OFF. */
+    protected static final String FORCE_JDK8_OFF = "forceJdk8Off";
 
-	/** The Constant APIS_SUFFIX. */
-	protected static final String API_SUFFIX = "apiSuffix";
+    /** The Constant APIS_SUFFIX. */
+    protected static final String API_SUFFIX = "apiSuffix";
 
-	/** The Constant ADD_SECURITY_HEADERS_AS_ARGUMENTS */
-	protected static final String SECURITY_HEADERS_AS_ARGUMENTS = "securityHeadersAsArguments";
+    /** The Constant ADD_SECURITY_HEADERS_AS_ARGUMENTS */
+    protected static final String SECURITY_HEADERS_AS_ARGUMENTS = "securityHeadersAsArguments";
 
-	/** The Constant BASE_PATH_AS_ROOT */
-	protected static final String BASE_PATH_AS_ROOT = "basePathAsRoot";
+    /** The Constant BASE_PATH_AS_ROOT */
+    protected static final String BASE_PATH_AS_ROOT = "basePathAsRoot";
 
-	/** The Constant X_TYPE. */
-	private static final String X_TYPE = "x-type";
+    /** The Constant X_TYPE. */
+    private static final String X_TYPE = "x-type";
 
-	/** The Constant X_SUPER_CLASS. */
-	private static final String X_SUPER_CLASS = "x-superClass";
+    /** The Constant X_SUPER_CLASS. */
+    private static final String X_SUPER_CLASS = "x-superClass";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see io.swagger.codegen.languages.SpringCodegen#getTag()
-	 */
-	@Override
-	public CodegenType getTag() {
-		return CodegenType.SERVER;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see io.swagger.codegen.languages.SpringCodegen#getTag()
+     */
+    @Override
+    public CodegenType getTag() {
+        return CodegenType.SERVER;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see io.swagger.codegen.languages.SpringCodegen#getName()
-	 */
-	@Override
-	public String getName() {
-		return "NinjaTech Codegen";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see io.swagger.codegen.languages.SpringCodegen#getName()
+     */
+    @Override
+    public String getName() {
+        return "NinjaTech Codegen";
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see io.swagger.codegen.languages.SpringCodegen#getHelp()
-	 */
-	@Override
-	public String getHelp() {
-		return "Generates Java Interfaces and Models.";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see io.swagger.codegen.languages.SpringCodegen#getHelp()
+     */
+    @Override
+    public String getHelp() {
+        return "Generates Java Interfaces and Models.";
+    }
 
-	/**
-	 * Overridden to set the generation of only the interfaces.
-	 */
-	@Override
-	public void processOpts() {
-		setInterfaceOnly(true); // Excludes the Controllers Generation
+    /**
+     * Overridden to set the generation of only the interfaces.
+     */
+    @Override
+    public void processOpts() {
+        setInterfaceOnly(true); // Excludes the Controllers Generation
 
-		super.processOpts();
+        super.processOpts();
 
-		if ((boolean) this.additionalProperties.get(FORCE_JDK8_OFF)) {
-			this.additionalProperties.remove("jdk8-no-delegate");
-			this.additionalProperties.remove("jdk8");
-		}
-	}
+        if ((boolean) this.additionalProperties.get(FORCE_JDK8_OFF)) {
+            this.additionalProperties.remove("jdk8-no-delegate");
+            this.additionalProperties.remove("jdk8");
+        }
+    }
 
-	/**
-	 * Overridden to handle the extension parameters (x-) for the mapping of the
-	 * external Model classes.
-	 */
-	@Override
-	public String getSwaggerType(Property property) {
-		String swaggerType = super.getSwaggerType(property);
+    /**
+     * Overridden to handle the extension parameters (x-) for the mapping of the
+     * external Model classes.
+     */
+    @Override
+    public String getSwaggerType(Property property) {
+        String swaggerType = super.getSwaggerType(property);
 
-		if ("string".equalsIgnoreCase(swaggerType) && property.getVendorExtensions().containsKey(X_TYPE)) {
-			swaggerType = (String) property.getVendorExtensions().get(X_TYPE);
-		} else if ("string".equalsIgnoreCase(swaggerType) && property.getFormat() != null && property.getFormat().startsWith("x-")) {
-			swaggerType = property.getFormat().substring("x-".length());
-		}
+        if ("string".equalsIgnoreCase(swaggerType) && property.getVendorExtensions().containsKey(X_TYPE)) {
+            swaggerType = (String) property.getVendorExtensions().get(X_TYPE);
+        } else if ("string".equalsIgnoreCase(swaggerType) && property.getFormat() != null && property.getFormat().startsWith("x-")) {
+            swaggerType = property.getFormat().substring("x-".length());
+        }
 
-		return swaggerType;
-	}
+        return swaggerType;
+    }
 
-	/**
-	 * Overridden to handle the inheritance feature of the Model classes.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public Map<String, Object> postProcessModels(Map<String, Object> objs) {
-		// Super Class Management
-		List<Map<String, ?>> modelMaps = (List<Map<String, ?>>) objs.get("models");
+    /**
+     * Overridden to handle the inheritance feature of the Model classes.
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public Map<String, Object> postProcessModels(Map<String, Object> objs) {
+        // Super Class Management
+        List<Map<String, ?>> modelMaps = (List<Map<String, ?>>) objs.get("models");
 
-		for (Map<String, ?> modelsMap : modelMaps) {
-			CodegenModel model = (CodegenModel) modelsMap.get("model");
-			if (model.vendorExtensions.containsKey(X_SUPER_CLASS)) {
-				List<String> superClasses = (List<String>) model.vendorExtensions.get(X_SUPER_CLASS);
-				if (superClasses.size() != 1) {
-					throw new RuntimeException(String.format("%s extensions must have one and only one value", X_SUPER_CLASS));
-				}
-				String superClass = superClasses.get(0);
-				addImport(objs, superClass);
-				model.parent = this.typeMapping.get(superClass);
-			}
-		}
+        for (Map<String, ?> modelsMap : modelMaps) {
+            CodegenModel model = (CodegenModel) modelsMap.get("model");
+            if (model.vendorExtensions.containsKey(X_SUPER_CLASS)) {
+                List<String> superClasses = (List<String>) model.vendorExtensions.get(X_SUPER_CLASS);
+                if (superClasses.size() != 1) {
+                    throw new RuntimeException(String.format("%s extensions must have one and only one value", X_SUPER_CLASS));
+                }
+                String superClass = superClasses.get(0);
+                addImport(objs, superClass);
+                model.parent = this.typeMapping.get(superClass);
+            }
+        }
 
-		return super.postProcessModels(objs);
-	}
+        return super.postProcessModels(objs);
+    }
 
-	/**
-	 * Overridden to handle the usage of the external Model classes as parameter of
-	 * the API's.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
-		Map<String, ?> operationLists = (Map<String, ?>) objs.get("operations");
-		List<CodegenOperation> operations = (List<CodegenOperation>) operationLists.get("operation");
+    /**
+     * Overridden to handle the usage of the external Model classes as parameter of
+     * the API's.
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        Map<String, ?> operationLists = (Map<String, ?>) objs.get("operations");
+        List<CodegenOperation> operations = (List<CodegenOperation>) operationLists.get("operation");
 
-		for (CodegenOperation operation : operations) {
-			if (this.typeMapping.containsKey(operation.returnBaseType)) {
-				operation.returnBaseType = this.typeMapping.get(operation.returnBaseType);
-			}
-			if (operation.responses != null) {
-				for (CodegenResponse response : operation.responses) {
-					if (this.typeMapping.containsKey(response.baseType)) {
-						response.baseType = this.typeMapping.get(response.baseType);
-					}
-				}
-			}
+        for (CodegenOperation operation : operations) {
+            if (this.typeMapping.containsKey(operation.returnBaseType)) {
+                operation.returnBaseType = this.typeMapping.get(operation.returnBaseType);
+            }
+            if (operation.responses != null) {
+                for (CodegenResponse response : operation.responses) {
+                    if (this.typeMapping.containsKey(response.baseType)) {
+                        response.baseType = this.typeMapping.get(response.baseType);
+                    }
+                }
+            }
 
-			handleApiKeySecurityHeaders(operation);
+            handleApiKeySecurityHeaders(operation);
 
-			// In case of external types in body this is the only point where to add the
-			// imports.
-			if (operation.getHasBodyParam() && operation.bodyParam.vendorExtensions.containsKey(X_TYPE)) {
-				CodegenParameter bodyParam = operation.bodyParam;
-				addImport(objs, bodyParam.baseType);
-			}
-		}
+            // In case of external types in body this is the only point where to add the
+            // imports.
+            if (operation.getHasBodyParam() && operation.bodyParam.vendorExtensions.containsKey(X_TYPE)) {
+                CodegenParameter bodyParam = operation.bodyParam;
+                addImport(objs, bodyParam.baseType);
+            }
+        }
 
-		handleBasePathAsRoot(objs);
+        handleBasePathAsRoot(objs);
 
-		return super.postProcessOperations(objs);
-	}
+        return super.postProcessOperations(objs);
+    }
 
-	/**
-	 * Overriden to handle the usage of the external Model classes as body of the
-	 * API's.
-	 */
-	@Override
-	public void postProcessParameter(CodegenParameter parameter) {
-		if (parameter.isBodyParam && StringUtils.isNotBlank(parameter.jsonSchema)) {
-			try {
-				JsonNode rootNode = Json.mapper().readTree(parameter.jsonSchema);
-				JsonNode schemaNode = rootNode.findPath("schema");
-				if (!schemaNode.isMissingNode()) {
-					JsonNode xTypeNode = schemaNode.findPath(X_TYPE);
-					if (!xTypeNode.isMissingNode()) {
-						Map<String, Object> vendorExtensions = Collections.singletonMap(X_TYPE, xTypeNode.asText());
-						Property property = PropertyBuilder.build(parameter.baseType.toLowerCase(), null, Collections.singletonMap(PropertyId.VENDOR_EXTENSIONS, vendorExtensions));
-						String type = getSwaggerType(property);
-						parameter.baseType = type;
-						parameter.dataType = this.typeMapping.get(type);
-						parameter.isPrimitiveType = true;
-						parameter.vendorExtensions.putAll(vendorExtensions);
-					}
-				}
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
+    /**
+     * Overriden to handle the usage of the external Model classes as body of the
+     * API's.
+     */
+    @Override
+    public void postProcessParameter(CodegenParameter parameter) {
+        if (parameter.isBodyParam && StringUtils.isNotBlank(parameter.jsonSchema)) {
+            try {
+                JsonNode rootNode = Json.mapper().readTree(parameter.jsonSchema);
+                JsonNode schemaNode = rootNode.findPath("schema");
+                if (!schemaNode.isMissingNode()) {
+                    JsonNode xTypeNode = schemaNode.findPath(X_TYPE);
+                    if (!xTypeNode.isMissingNode()) {
+                        Map<String, Object> vendorExtensions = Collections.singletonMap(X_TYPE, xTypeNode.asText());
+                        Property property = PropertyBuilder.build(parameter.baseType.toLowerCase(), null, Collections.singletonMap(PropertyId.VENDOR_EXTENSIONS, vendorExtensions));
+                        String type = getSwaggerType(property);
+                        parameter.baseType = type;
+                        parameter.dataType = this.typeMapping.get(type);
+                        parameter.isPrimitiveType = true;
+                        parameter.vendorExtensions.putAll(vendorExtensions);
+                    }
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
 
-		super.postProcessParameter(parameter);
-	}
+        super.postProcessParameter(parameter);
+    }
 
-	@Override
-	public String toApiName(String name) {
-		String result = null;
+    @Override
+    public String toApiName(String name) {
+        String result = null;
 
-		if (this.additionalProperties.containsKey(API_SUFFIX)) {
-			result = name.length() == 0 ? "Default" : sanitizeName(name);
-			result = String.format("%s%s", camelize(result), this.additionalProperties.get(API_SUFFIX));
-		} else {
-			result = super.toApiName(name);
-		}
+        if (this.additionalProperties.containsKey(API_SUFFIX)) {
+            result = name.length() == 0 ? "Default" : sanitizeName(name);
+            result = String.format("%s%s", camelize(result), this.additionalProperties.get(API_SUFFIX));
+        } else {
+            result = super.toApiName(name);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public void preprocessSwagger(Swagger swagger) {
-		super.preprocessSwagger(swagger);
+    @Override
+    public void preprocessSwagger(Swagger swagger) {
+        super.preprocessSwagger(swagger);
 
-		if ((boolean) this.additionalProperties.get(BASE_PATH_AS_ROOT)
-		    && StringUtils.isBlank(swagger.getBasePath())) {
-			this.additionalProperties.put(BASE_PATH_AS_ROOT, false);
-		}
-	}
+        if ((boolean) this.additionalProperties.get(BASE_PATH_AS_ROOT)
+            && StringUtils.isBlank(swagger.getBasePath())) {
+            this.additionalProperties.put(BASE_PATH_AS_ROOT, false);
+        }
+    }
 
-	/**
-	 * Adds the import of the external Model classes.
-	 *
-	 * @param objs
-	 *            Objects
-	 * @param alias
-	 *            Alias of the class to import
-	 */
-	@SuppressWarnings("unchecked")
-	private void addImport(Map<String, Object> objs, String alias) {
-		List<Map<String, String>> imports = (List<Map<String, String>>) objs.get("imports");
-		String aliasFQN = this.importMapping.get(alias);
+    /**
+     * Adds the import of the external Model classes.
+     *
+     * @param objs
+     *            Objects
+     * @param alias
+     *            Alias of the class to import
+     */
+    @SuppressWarnings("unchecked")
+    private void addImport(Map<String, Object> objs, String alias) {
+        List<Map<String, String>> imports = (List<Map<String, String>>) objs.get("imports");
+        String aliasFQN = this.importMapping.get(alias);
 
-		if (aliasFQN == null) {
-			throw new RuntimeException(String.format("Missing import mapping for %s", alias));
-		}
+        if (aliasFQN == null) {
+            throw new RuntimeException(String.format("Missing import mapping for %s", alias));
+        }
 
-		boolean importAlreadyPresent = false;
-		for (Map<String, String> import_ : imports) {
-			if (import_.containsValue(aliasFQN)) {
-				importAlreadyPresent = true;
-				break;
-			}
-		}
+        boolean importAlreadyPresent = false;
+        for (Map<String, String> import_ : imports) {
+            if (import_.containsValue(aliasFQN)) {
+                importAlreadyPresent = true;
+                break;
+            }
+        }
 
-		if (!importAlreadyPresent) {
-			imports.add(Collections.singletonMap("import", aliasFQN));
-		}
-	}
+        if (!importAlreadyPresent) {
+            imports.add(Collections.singletonMap("import", aliasFQN));
+        }
+    }
 
-	/**
-	 * Add ApiKey Security Headers to the parameters of the method
-	 * 
-	 * @param operation
-	 *            Operation
-	 */
-	private void handleApiKeySecurityHeaders(CodegenOperation operation) {
-		if (operation.authMethods != null && (boolean) this.additionalProperties.get(SECURITY_HEADERS_AS_ARGUMENTS)) {
-			List<CodegenSecurity> apiKeySecurityHeaders = operation.authMethods.stream().filter(e -> e.isApiKey && e.isKeyInHeader).collect(Collectors.toList());
-			if (!apiKeySecurityHeaders.isEmpty()) {
-				if (!operation.allParams.isEmpty()) {
-					operation.allParams.get(operation.allParams.size() - 1).hasMore = true;
-				}
-				for (CodegenSecurity apiKeySecurityHeader : apiKeySecurityHeaders) {
-					CodegenParameter apiKeySecurityHeaderParameter = new CodegenParameter();
-					operation.allParams.add(apiKeySecurityHeaderParameter);
-					operation.headerParams.add(apiKeySecurityHeaderParameter);
-					operation.requiredParams.add(apiKeySecurityHeaderParameter);
-					operation.hasParams = true;
-					operation.hasRequiredParams = true;
-					apiKeySecurityHeaderParameter.baseName = apiKeySecurityHeader.keyParamName;
-					apiKeySecurityHeaderParameter.description = apiKeySecurityHeader.keyParamName;
-					apiKeySecurityHeaderParameter.dataType = "String";
-					apiKeySecurityHeaderParameter.isHeaderParam = true;
-					apiKeySecurityHeaderParameter.isPrimitiveType = true;
-					apiKeySecurityHeaderParameter.isString = true;
-					apiKeySecurityHeaderParameter.paramName = apiKeySecurityHeader.name;
-					apiKeySecurityHeaderParameter.required = true;
-					apiKeySecurityHeaderParameter.hasMore = true;
-				}
-				operation.allParams.get(operation.allParams.size() - 1).hasMore = false;
-			}
-		}
-	}
+    /**
+     * Add ApiKey Security Headers to the parameters of the method
+     * 
+     * @param operation
+     *            Operation
+     */
+    private void handleApiKeySecurityHeaders(CodegenOperation operation) {
+        if (operation.authMethods != null && (boolean) this.additionalProperties.get(SECURITY_HEADERS_AS_ARGUMENTS)) {
+            List<CodegenSecurity> apiKeySecurityHeaders = operation.authMethods.stream().filter(e -> e.isApiKey && e.isKeyInHeader).collect(Collectors.toList());
+            if (!apiKeySecurityHeaders.isEmpty()) {
+                if (!operation.allParams.isEmpty()) {
+                    operation.allParams.get(operation.allParams.size() - 1).hasMore = true;
+                }
+                for (CodegenSecurity apiKeySecurityHeader : apiKeySecurityHeaders) {
+                    CodegenParameter apiKeySecurityHeaderParameter = new CodegenParameter();
+                    operation.allParams.add(apiKeySecurityHeaderParameter);
+                    operation.headerParams.add(apiKeySecurityHeaderParameter);
+                    operation.requiredParams.add(apiKeySecurityHeaderParameter);
+                    operation.hasParams = true;
+                    operation.hasRequiredParams = true;
+                    apiKeySecurityHeaderParameter.baseName = apiKeySecurityHeader.keyParamName;
+                    apiKeySecurityHeaderParameter.description = apiKeySecurityHeader.keyParamName;
+                    apiKeySecurityHeaderParameter.dataType = "String";
+                    apiKeySecurityHeaderParameter.isHeaderParam = true;
+                    apiKeySecurityHeaderParameter.isPrimitiveType = true;
+                    apiKeySecurityHeaderParameter.isString = true;
+                    apiKeySecurityHeaderParameter.paramName = apiKeySecurityHeader.name;
+                    apiKeySecurityHeaderParameter.required = true;
+                    apiKeySecurityHeaderParameter.hasMore = true;
+                }
+                operation.allParams.get(operation.allParams.size() - 1).hasMore = false;
+            }
+        }
+    }
 
-	/**
-	 * Handles the BasePathAsRoot parameter.
-	 * 
-	 * @param objs
-	 *            Objects
-	 */
-	private void handleBasePathAsRoot(Map<String, Object> objs) {
-		objs.put(BASE_PATH_AS_ROOT, this.additionalProperties.get(BASE_PATH_AS_ROOT));
-	}
+    /**
+     * Handles the BasePathAsRoot parameter.
+     * 
+     * @param objs
+     *            Objects
+     */
+    private void handleBasePathAsRoot(Map<String, Object> objs) {
+        objs.put(BASE_PATH_AS_ROOT, this.additionalProperties.get(BASE_PATH_AS_ROOT));
+    }
 
 }

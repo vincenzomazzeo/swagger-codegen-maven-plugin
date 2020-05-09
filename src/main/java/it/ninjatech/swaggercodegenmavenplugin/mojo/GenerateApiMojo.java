@@ -43,15 +43,15 @@ import io.swagger.codegen.DefaultGenerator;
 @Mojo(name = "generate-api", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.RUNTIME)
 public class GenerateApiMojo extends AbstractGenerateMojo {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see it.ninjatech.swaggercodegenmavenplugin.mojo.AbstractGenerateMojo#
-	 * postDefaultGeneratorSetup(io.swagger.codegen.DefaultGenerator)
-	 */
-	@Override
-	protected void postDefaultGeneratorSetup(DefaultGenerator defaultGenerator) {
-		defaultGenerator.setGeneratorPropertyDefault(CodegenConstants.APIS, Boolean.TRUE.toString());
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see it.ninjatech.swaggercodegenmavenplugin.mojo.AbstractGenerateMojo#
+     * postDefaultGeneratorSetup(io.swagger.codegen.DefaultGenerator)
+     */
+    @Override
+    protected void postDefaultGeneratorSetup(DefaultGenerator defaultGenerator) {
+        defaultGenerator.setGeneratorPropertyDefault(CodegenConstants.APIS, Boolean.TRUE.toString());
+    }
 
 }

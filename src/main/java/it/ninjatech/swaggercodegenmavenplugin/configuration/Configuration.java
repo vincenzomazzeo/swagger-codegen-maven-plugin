@@ -40,401 +40,401 @@ import io.swagger.codegen.languages.AbstractJavaCodegen;
  */
 public class Configuration {
 
-	/** ID */
-	private final String id;
+    /** ID */
+    private final String id;
 
-	/** AbstractJavaCodegen class to use for generating code. */
-	private Class<? extends AbstractJavaCodegen> javaCodegen;
+    /** AbstractJavaCodegen class to use for generating code. */
+    private Class<? extends AbstractJavaCodegen> javaCodegen;
 
-	/** Verbose output. */
-	private boolean verbose;
+    /** Verbose output. */
+    private boolean verbose;
 
-	/** Output folder. */
-	private File outputFolder;
+    /** Output folder. */
+    private File outputFolder;
 
-	/** Source SWAGGER files to elaborate. */
-	private List<URL> sourceFiles;
+    /** Source SWAGGER files to elaborate. */
+    private List<URL> sourceFiles;
 
-	/** Package for Model classes. */
-	private String modelPackage;
+    /** Package for Model classes. */
+    private String modelPackage;
 
-	/** Package for API interfaces. */
-	private String apiPackage;
+    /** Package for API interfaces. */
+    private String apiPackage;
 
-	/** Data type mapping. */
-	private DataTypeMapping dataTypeMapping;
+    /** Data type mapping. */
+    private DataTypeMapping dataTypeMapping;
 
-	/** Enable Java 8 */
-	private boolean enableJava8;
+    /** Enable Java 8 */
+    private boolean enableJava8;
 
-	/** Date Library to use */
-	private DateLibrary dateLibrary;
+    /** Date Library to use */
+    private DateLibrary dateLibrary;
 
-	/** Enable Bean Validation */
-	private boolean enableBeanValidation;
+    /** Enable Bean Validation */
+    private boolean enableBeanValidation;
 
-	/** Add Security Headers as method arguments */
-	private boolean securityHeadersAsArguments;
+    /** Add Security Headers as method arguments */
+    private boolean securityHeadersAsArguments;
 
-	/** Base Path used as Root */
-	private boolean basePathAsRoot;
+    /** Base Path used as Root */
+    private boolean basePathAsRoot;
 
-	/** API's Suffix */
-	private String apiSuffix;
+    /** API's Suffix */
+    private String apiSuffix;
 
-	/** Model's Name Suffix */
-	private String modelNameSuffix;
+    /** Model's Name Suffix */
+    private String modelNameSuffix;
 
-	/**
-	 * Instantiates a new configuration.
-	 *
-	 * @param id
-	 *            configuration ID
-	 */
-	public Configuration(String id) {
-		this.id = id;
-	}
+    /**
+     * Instantiates a new configuration.
+     *
+     * @param id
+     *            configuration ID
+     */
+    public Configuration(String id) {
+        this.id = id;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder result = new StringBuilder();
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
 
-		result.append("Configuration:");
-		result.append("\n    Java Codegen -> ").append(this.javaCodegen.getName());
-		result.append("\n    Verbose -> ").append(this.verbose);
-		result.append("\n    Output Folder -> ").append(this.outputFolder);
-		result.append("\n    Model Package -> ").append(this.modelPackage);
-		result.append("\n    API Package -> ").append(this.apiPackage);
-		result.append("\n    Enable Java 8 -> ").append(this.enableJava8);
-		result.append("\n    Date Library -> ").append(this.dateLibrary);
-		result.append("\n    Enable Bean Validation -> ").append(this.enableBeanValidation);
-		result.append("\n    Security Headers as Arguments -> ").append(this.securityHeadersAsArguments);
-		result.append("\n    Base Path as Root -> ").append(this.basePathAsRoot);
-		if (this.apiSuffix != null) {
-			result.append("\n    API's Suffix -> ").append(this.apiSuffix);
-		}
-		if (this.modelNameSuffix != null) {
-			result.append("\n    Model's Name Suffix -> ").append(this.modelNameSuffix);
-		}
+        result.append("Configuration:");
+        result.append("\n    Java Codegen -> ").append(this.javaCodegen.getName());
+        result.append("\n    Verbose -> ").append(this.verbose);
+        result.append("\n    Output Folder -> ").append(this.outputFolder);
+        result.append("\n    Model Package -> ").append(this.modelPackage);
+        result.append("\n    API Package -> ").append(this.apiPackage);
+        result.append("\n    Enable Java 8 -> ").append(this.enableJava8);
+        result.append("\n    Date Library -> ").append(this.dateLibrary);
+        result.append("\n    Enable Bean Validation -> ").append(this.enableBeanValidation);
+        result.append("\n    Security Headers as Arguments -> ").append(this.securityHeadersAsArguments);
+        result.append("\n    Base Path as Root -> ").append(this.basePathAsRoot);
+        if (this.apiSuffix != null) {
+            result.append("\n    API's Suffix -> ").append(this.apiSuffix);
+        }
+        if (this.modelNameSuffix != null) {
+            result.append("\n    Model's Name Suffix -> ").append(this.modelNameSuffix);
+        }
 
-		return result.toString();
-	}
+        return result.toString();
+    }
 
-	/**
-	 * Returns the id.
-	 *
-	 * @return the id
-	 */
-	public String getId() {
-		return this.id;
-	}
+    /**
+     * Returns the id.
+     *
+     * @return the id
+     */
+    public String getId() {
+        return this.id;
+    }
 
-	/**
-	 * Returns the AbstractJavaCodegen.
-	 *
-	 * @return AbstractJavaCodegen
-	 */
-	public Class<? extends AbstractJavaCodegen> getJavaCodegen() {
-		return javaCodegen;
-	}
+    /**
+     * Returns the AbstractJavaCodegen.
+     *
+     * @return AbstractJavaCodegen
+     */
+    public Class<? extends AbstractJavaCodegen> getJavaCodegen() {
+        return javaCodegen;
+    }
 
-	/**
-	 * Sets the AbstractJavaCodegen.
-	 *
-	 * @param javaCodegen
-	 *            AbstractJavaCodegen
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setJavaCodegen(Class<? extends AbstractJavaCodegen> javaCodegen) {
-		this.javaCodegen = javaCodegen;
+    /**
+     * Sets the AbstractJavaCodegen.
+     *
+     * @param javaCodegen
+     *            AbstractJavaCodegen
+     * @return The instance of the Configuration
+     */
+    public Configuration setJavaCodegen(Class<? extends AbstractJavaCodegen> javaCodegen) {
+        this.javaCodegen = javaCodegen;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Checks if to produce verbose output.
-	 *
-	 * @return true, if verbose is enabled
-	 */
-	public boolean isVerbose() {
-		return verbose;
-	}
+    /**
+     * Checks if to produce verbose output.
+     *
+     * @return true, if verbose is enabled
+     */
+    public boolean isVerbose() {
+        return verbose;
+    }
 
-	/**
-	 * Sets the verbose output.
-	 *
-	 * @param verbose
-	 *            Verbose
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setVerbose(boolean verbose) {
-		this.verbose = verbose;
+    /**
+     * Sets the verbose output.
+     *
+     * @param verbose
+     *            Verbose
+     * @return The instance of the Configuration
+     */
+    public Configuration setVerbose(boolean verbose) {
+        this.verbose = verbose;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Returns the output folder.
-	 *
-	 * @return Output folder
-	 */
-	public File getOutputFolder() {
-		return outputFolder;
-	}
+    /**
+     * Returns the output folder.
+     *
+     * @return Output folder
+     */
+    public File getOutputFolder() {
+        return outputFolder;
+    }
 
-	/**
-	 * Sets the output folder.
-	 *
-	 * @param outputFolder
-	 *            Output folder
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setOutputFolder(File outputFolder) {
-		this.outputFolder = outputFolder;
+    /**
+     * Sets the output folder.
+     *
+     * @param outputFolder
+     *            Output folder
+     * @return The instance of the Configuration
+     */
+    public Configuration setOutputFolder(File outputFolder) {
+        this.outputFolder = outputFolder;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Returns the SWAGGER source files to elaborate.
-	 *
-	 * @return SWAGGER source files
-	 */
-	public List<URL> getSourceFiles() {
-		return sourceFiles;
-	}
+    /**
+     * Returns the SWAGGER source files to elaborate.
+     *
+     * @return SWAGGER source files
+     */
+    public List<URL> getSourceFiles() {
+        return sourceFiles;
+    }
 
-	/**
-	 * Sets the SWAGGER source files to elaborate.
-	 *
-	 * @param sourceFiles
-	 *            SWAGGER source files
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setSourceFiles(List<URL> sourceFiles) {
-		this.sourceFiles = sourceFiles;
+    /**
+     * Sets the SWAGGER source files to elaborate.
+     *
+     * @param sourceFiles
+     *            SWAGGER source files
+     * @return The instance of the Configuration
+     */
+    public Configuration setSourceFiles(List<URL> sourceFiles) {
+        this.sourceFiles = sourceFiles;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Returns the package for Model classes.
-	 *
-	 * @return Package for Model classes
-	 */
-	public String getModelPackage() {
-		return modelPackage;
-	}
+    /**
+     * Returns the package for Model classes.
+     *
+     * @return Package for Model classes
+     */
+    public String getModelPackage() {
+        return modelPackage;
+    }
 
-	/**
-	 * Sets the package for Model classes.
-	 *
-	 * @param modelPackage
-	 *            Package for Model classes
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setModelPackage(String modelPackage) {
-		this.modelPackage = modelPackage;
+    /**
+     * Sets the package for Model classes.
+     *
+     * @param modelPackage
+     *            Package for Model classes
+     * @return The instance of the Configuration
+     */
+    public Configuration setModelPackage(String modelPackage) {
+        this.modelPackage = modelPackage;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Returns the package for API interfaces.
-	 *
-	 * @return Package for API interfaces
-	 */
-	public String getApiPackage() {
-		return apiPackage;
-	}
+    /**
+     * Returns the package for API interfaces.
+     *
+     * @return Package for API interfaces
+     */
+    public String getApiPackage() {
+        return apiPackage;
+    }
 
-	/**
-	 * Sets the package for API interfaces.
-	 *
-	 * @param apiPackage
-	 *            Package for API interfaces
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setApiPackage(String apiPackage) {
-		this.apiPackage = apiPackage;
+    /**
+     * Sets the package for API interfaces.
+     *
+     * @param apiPackage
+     *            Package for API interfaces
+     * @return The instance of the Configuration
+     */
+    public Configuration setApiPackage(String apiPackage) {
+        this.apiPackage = apiPackage;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Return the data type mapping.
-	 *
-	 * @return Data type mapping
-	 */
-	public DataTypeMapping getDataTypeMapping() {
-		return dataTypeMapping;
-	}
+    /**
+     * Return the data type mapping.
+     *
+     * @return Data type mapping
+     */
+    public DataTypeMapping getDataTypeMapping() {
+        return dataTypeMapping;
+    }
 
-	/**
-	 * Sets the data type mapping.
-	 *
-	 * @param dataTypeMapping
-	 *            Data type mapping
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setDataTypeMapping(DataTypeMapping dataTypeMapping) {
-		this.dataTypeMapping = dataTypeMapping;
+    /**
+     * Sets the data type mapping.
+     *
+     * @param dataTypeMapping
+     *            Data type mapping
+     * @return The instance of the Configuration
+     */
+    public Configuration setDataTypeMapping(DataTypeMapping dataTypeMapping) {
+        this.dataTypeMapping = dataTypeMapping;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Returns if to enable Java 8.
-	 * 
-	 * @return If Java 8 is to enable
-	 */
-	public boolean isEnableJava8() {
-		return this.enableJava8;
-	}
+    /**
+     * Returns if to enable Java 8.
+     * 
+     * @return If Java 8 is to enable
+     */
+    public boolean isEnableJava8() {
+        return this.enableJava8;
+    }
 
-	/**
-	 * Sets if Java 8 has to be enabled.
-	 * 
-	 * @param enableJava8
-	 *            If Java 8 has to be enabled
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setEnableJava8(boolean enableJava8) {
-		this.enableJava8 = enableJava8;
+    /**
+     * Sets if Java 8 has to be enabled.
+     * 
+     * @param enableJava8
+     *            If Java 8 has to be enabled
+     * @return The instance of the Configuration
+     */
+    public Configuration setEnableJava8(boolean enableJava8) {
+        this.enableJava8 = enableJava8;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Returns the Date Library to use.
-	 * 
-	 * @return Date Library to use
-	 */
-	public DateLibrary getDateLibrary() {
-		return this.dateLibrary;
-	}
+    /**
+     * Returns the Date Library to use.
+     * 
+     * @return Date Library to use
+     */
+    public DateLibrary getDateLibrary() {
+        return this.dateLibrary;
+    }
 
-	/**
-	 * Sets the Date Library to use.
-	 * 
-	 * @param dateLibrary
-	 *            Date Library to use
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setDateLibrary(DateLibrary dateLibrary) {
-		this.dateLibrary = dateLibrary;
+    /**
+     * Sets the Date Library to use.
+     * 
+     * @param dateLibrary
+     *            Date Library to use
+     * @return The instance of the Configuration
+     */
+    public Configuration setDateLibrary(DateLibrary dateLibrary) {
+        this.dateLibrary = dateLibrary;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Returns if to enable Bean Validation.
-	 * 
-	 * @return If to enable Bean Validation
-	 */
-	public boolean isEnableBeanValidation() {
-		return this.enableBeanValidation;
-	}
+    /**
+     * Returns if to enable Bean Validation.
+     * 
+     * @return If to enable Bean Validation
+     */
+    public boolean isEnableBeanValidation() {
+        return this.enableBeanValidation;
+    }
 
-	/**
-	 * Sets if the Bean Validation has to be enabled.
-	 * 
-	 * @param enableBeanValidation
-	 *            If the Bean Validation has to be enabled
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setEnableBeanValidation(boolean enableBeanValidation) {
-		this.enableBeanValidation = enableBeanValidation;
+    /**
+     * Sets if the Bean Validation has to be enabled.
+     * 
+     * @param enableBeanValidation
+     *            If the Bean Validation has to be enabled
+     * @return The instance of the Configuration
+     */
+    public Configuration setEnableBeanValidation(boolean enableBeanValidation) {
+        this.enableBeanValidation = enableBeanValidation;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Returns if to add security headers as arguments of the method.
-	 * 
-	 * @return If to add Security Headers as method arguments
-	 */
-	public boolean isSecurityHeadersAsArguments() {
-		return this.securityHeadersAsArguments;
-	}
+    /**
+     * Returns if to add security headers as arguments of the method.
+     * 
+     * @return If to add Security Headers as method arguments
+     */
+    public boolean isSecurityHeadersAsArguments() {
+        return this.securityHeadersAsArguments;
+    }
 
-	/**
-	 * Sets if security headers must be added as method arguments.
-	 * 
-	 * @param securityHeadersAsArguments
-	 *            If Security Headers must be added as method arguments
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setSecurityHeadersAsArguments(boolean securityHeadersAsArguments) {
-		this.securityHeadersAsArguments = securityHeadersAsArguments;
+    /**
+     * Sets if security headers must be added as method arguments.
+     * 
+     * @param securityHeadersAsArguments
+     *            If Security Headers must be added as method arguments
+     * @return The instance of the Configuration
+     */
+    public Configuration setSecurityHeadersAsArguments(boolean securityHeadersAsArguments) {
+        this.securityHeadersAsArguments = securityHeadersAsArguments;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Returns if to use Base Path value as Root.
-	 * 
-	 * @return If to use Base Path value as Root
-	 */
-	public boolean isBasePathAsRoot() {
-		return this.basePathAsRoot;
-	}
+    /**
+     * Returns if to use Base Path value as Root.
+     * 
+     * @return If to use Base Path value as Root
+     */
+    public boolean isBasePathAsRoot() {
+        return this.basePathAsRoot;
+    }
 
-	/**
-	 * Sets if Base Path must be used as root.
-	 * 
-	 * @param basePathAsRoot
-	 *            If Base Path must be used as root
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setBasePathAsRoot(boolean basePathAsRoot) {
-		this.basePathAsRoot = basePathAsRoot;
+    /**
+     * Sets if Base Path must be used as root.
+     * 
+     * @param basePathAsRoot
+     *            If Base Path must be used as root
+     * @return The instance of the Configuration
+     */
+    public Configuration setBasePathAsRoot(boolean basePathAsRoot) {
+        this.basePathAsRoot = basePathAsRoot;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Returns the API's Suffix.
-	 * 
-	 * @return API's Suffix
-	 */
-	public String getApiSuffix() {
-		return this.apiSuffix;
-	}
+    /**
+     * Returns the API's Suffix.
+     * 
+     * @return API's Suffix
+     */
+    public String getApiSuffix() {
+        return this.apiSuffix;
+    }
 
-	/**
-	 * Sets the API's Suffix.
-	 * 
-	 * @param apiSuffix
-	 *            API's Suffix
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setApiSuffix(String apiSuffix) {
-		this.apiSuffix = apiSuffix;
+    /**
+     * Sets the API's Suffix.
+     * 
+     * @param apiSuffix
+     *            API's Suffix
+     * @return The instance of the Configuration
+     */
+    public Configuration setApiSuffix(String apiSuffix) {
+        this.apiSuffix = apiSuffix;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Returns the Model's Name Suffix.
-	 * 
-	 * @return Model's Name Suffix
-	 */
-	public String getModelNameSuffix() {
-		return this.modelNameSuffix;
-	}
+    /**
+     * Returns the Model's Name Suffix.
+     * 
+     * @return Model's Name Suffix
+     */
+    public String getModelNameSuffix() {
+        return this.modelNameSuffix;
+    }
 
-	/**
-	 * Sets the Model's Name Suffix
-	 * 
-	 * @param modelNameSuffix
-	 *            Model's Name Suffix
-	 * @return The instance of the Configuration
-	 */
-	public Configuration setModelNameSuffix(String modelNameSuffix) {
-		this.modelNameSuffix = modelNameSuffix;
+    /**
+     * Sets the Model's Name Suffix
+     * 
+     * @param modelNameSuffix
+     *            Model's Name Suffix
+     * @return The instance of the Configuration
+     */
+    public Configuration setModelNameSuffix(String modelNameSuffix) {
+        this.modelNameSuffix = modelNameSuffix;
 
-		return this;
-	}
+        return this;
+    }
 
 }

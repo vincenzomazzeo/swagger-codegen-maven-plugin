@@ -44,70 +44,68 @@ import org.springframework.core.type.filter.TypeFilter;
  */
 public class ClassTypeFilter implements TypeFilter {
 
-	/** The Constant RECURSIVE_PATTERN. */
-	private static final String RECURSIVE_PATTERN = ".**";
+    /** The Constant RECURSIVE_PATTERN. */
+    private static final String RECURSIVE_PATTERN = ".**";
 
-	/** Recursive flag. */
-	private final boolean recursive;
+    /** Recursive flag. */
+    private final boolean recursive;
 
-	/** Base package. */
-	private final String basePackage;
+    /** Base package. */
+    private final String basePackage;
 
-	/**
-	 * Instantiates a new Class Type Filter.
-	 *
-	 * @param basePackage
-	 *            Base package
-	 */
-	protected ClassTypeFilter(String basePackage) {
-		this.recursive = basePackage.endsWith(RECURSIVE_PATTERN);
-		this.basePackage = this.recursive ? basePackage.substring(0, basePackage.length() - RECURSIVE_PATTERN.length()) : basePackage;
-	}
+    /**
+     * Instantiates a new Class Type Filter.
+     *
+     * @param basePackage
+     *            Base package
+     */
+    protected ClassTypeFilter(String basePackage) {
+        this.recursive = basePackage.endsWith(RECURSIVE_PATTERN);
+        this.basePackage = this.recursive ? basePackage.substring(0, basePackage.length() - RECURSIVE_PATTERN.length()) : basePackage;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.springframework.core.type.filter.TypeFilter#match(org.springframework.
-	 * core.type.classreading.MetadataReader,
-	 * org.springframework.core.type.classreading.MetadataReaderFactory)
-	 */
-	@Override
-	public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
-		return match(metadataReader.getClassMetadata());
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.springframework.core.type.filter.TypeFilter#match(org.springframework.
+     * core.type.classreading.MetadataReader,
+     * org.springframework.core.type.classreading.MetadataReaderFactory)
+     */
+    @Override
+    public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
+        return match(metadataReader.getClassMetadata());
+    }
 
-	/**
-	 * Matching method. <br>
-	 * Return <i>true</i> if the class belongs to the base package or one of its sub packages if the "**" wildcard has been specified.
-	 *
-	 * @param metadata
-	 *            Metadata of the class to check
-	 * @return true, if successful
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 */
-	public boolean match(ClassMetadata metadata) throws IOException {
-		boolean result = false;
+    /**
+     * Matching method. <br>
+     * Return <i>true</i> if the class belongs to the base package or one of its sub packages if the "**" wildcard has been specified.
+     *
+     * @param metadata
+     *            Metadata of the class to check
+     * @return true, if successful
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
+    public boolean match(ClassMetadata metadata) throws IOException {
+        boolean result = false;
 
-		try {
-			Class<?> type = Class.forName(metadata.getClassName());
-			if (metadata.isAbstract() || metadata.isConcrete()) {
-				if (this.recursive) {
-					result = StringUtils.startsWith(type.getPackage().getName(),
-					                                this.basePackage);
-				}
-				else {
-					result = StringUtils.equals(type.getPackage().getName(),
-					                            this.basePackage);
-				}
-			}
-		}
-		catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
-		}
+        try {
+            Class<?> type = Class.forName(metadata.getClassName());
+            if (metadata.isAbstract() || metadata.isConcrete()) {
+                if (this.recursive) {
+                    result = StringUtils.startsWith(type.getPackage().getName(),
+                                                    this.basePackage);
+                } else {
+                    result = StringUtils.equals(type.getPackage().getName(),
+                                                this.basePackage);
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

@@ -45,70 +45,70 @@ import java.util.Set;
  */
 public class DataTypeMapping {
 
-	/** Direct map. */
-	private Map<String, String> directMap;
+    /** Direct map. */
+    private Map<String, String> directMap;
 
-	/** Packages to scan. */
-	private Set<String> packages;
+    /** Packages to scan. */
+    private Set<String> packages;
 
-	/** External resources. */
-	private Set<URL> externalResources;
+    /** External resources. */
+    private Set<URL> externalResources;
 
-	/**
-	 * Return the direct map.
-	 *
-	 * @return Direct map
-	 */
-	public Map<String, String> getDirectMap() {
-		return this.directMap != null ? this.directMap : Collections.emptyMap();
-	}
+    /**
+     * Return the direct map.
+     *
+     * @return Direct map
+     */
+    public Map<String, String> getDirectMap() {
+        return this.directMap != null ? this.directMap : Collections.emptyMap();
+    }
 
-	/**
-	 * Sets the direct map.
-	 *
-	 * @param directMap
-	 *            Direct map
-	 */
-	public void setDirectMap(Map<String, String> directMap) {
-		this.directMap = directMap;
-	}
+    /**
+     * Sets the direct map.
+     *
+     * @param directMap
+     *            Direct map
+     */
+    public void setDirectMap(Map<String, String> directMap) {
+        this.directMap = directMap;
+    }
 
-	/**
-	 * Returns the packages to scan.
-	 *
-	 * @return Packages
-	 */
-	public Set<String> getPackages() {
-		return this.packages != null ? this.packages : Collections.emptySet();
-	}
+    /**
+     * Returns the packages to scan.
+     *
+     * @return Packages
+     */
+    public Set<String> getPackages() {
+        return this.packages != null ? this.packages : Collections.emptySet();
+    }
 
-	/**
-	 * Sets the packages to scan.
-	 *
-	 * @param packages
-	 *            Packages
-	 */
-	public void setPackages(Set<String> packages) {
-		this.packages = packages;
-	}
+    /**
+     * Sets the packages to scan.
+     *
+     * @param packages
+     *            Packages
+     */
+    public void setPackages(Set<String> packages) {
+        this.packages = packages;
+    }
 
-	/**
-	 * Returns the external resources.
-	 *
-	 * @return External resources
-	 */
-	public Set<URL> getExternalResources() {
-		return this.externalResources != null ? this.externalResources : Collections.emptySet();
-	}
+    /**
+     * Returns the external resources.
+     *
+     * @return External resources
+     */
+    public Set<URL> getExternalResources() {
+        return this.externalResources != null ? this.externalResources : Collections.emptySet();
+    }
 
-	/**
-	 * Sets the external resources.
-	 *
-	 * @param externalResources
-	 *            External resources
-	 */
-	public void setExternalResources(Set<URL> externalResources) {
-		this.externalResources = externalResources;
-	}
+    /**
+     * Sets the external resources.
+     *
+     * @param externalResources
+     *            External resources
+     */
+    public void setExternalResources(Set<URL> externalResources) {
+        this.externalResources = externalResources;
+    }
 
 }

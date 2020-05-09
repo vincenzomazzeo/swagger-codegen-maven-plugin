@@ -50,137 +50,136 @@ import it.ninjatech.swaggercodegenmavenplugin.configuration.DataTypeMapping;
  */
 public class DataTypeMappingHandler {
 
-	/**
-	 * Handles the {@link DataTypeMapping} configuration.
-	 *
-	 * @param log
-	 *            Log
-	 * @param dataTypeMapping
-	 *            Data type mapping
-	 * @return the Resolved Map
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 */
-	protected static Map<String, TypeData> handle(Log log, DataTypeMapping dataTypeMapping) throws IOException {
-		Map<String, TypeData> result = null;
+    /**
+     * Handles the {@link DataTypeMapping} configuration.
+     *
+     * @param log
+     *            Log
+     * @param dataTypeMapping
+     *            Data type mapping
+     * @return the Resolved Map
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
+    protected static Map<String, TypeData> handle(Log log, DataTypeMapping dataTypeMapping) throws IOException {
+        Map<String, TypeData> result = null;
 
-		if (dataTypeMapping != null) {
-			result = new HashMap<>();
+        if (dataTypeMapping != null) {
+            result = new HashMap<>();
 
-			handle(log, dataTypeMapping, result);
-		}
-		else {
-			result = Collections.emptyMap();
-		}
+            handle(log, dataTypeMapping, result);
+        } else {
+            result = Collections.emptyMap();
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * Handle the {@link DataTypeMapping} configuration.
-	 *
-	 * @param log
-	 *            Log
-	 * @param dataTypeMapping
-	 *            Data type mapping
-	 * @param typeMap
-	 *            the Resolved Map
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 */
-	private static void handle(Log log, DataTypeMapping dataTypeMapping, Map<String, TypeData> typeMap) throws IOException {
-		handleDirectMap(typeMap, dataTypeMapping.getDirectMap());
-		handlePackages(log, typeMap, dataTypeMapping.getPackages());
-		handleExternalResources(log, typeMap, dataTypeMapping.getExternalResources());
-	}
+    /**
+     * Handle the {@link DataTypeMapping} configuration.
+     *
+     * @param log
+     *            Log
+     * @param dataTypeMapping
+     *            Data type mapping
+     * @param typeMap
+     *            the Resolved Map
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
+    private static void handle(Log log, DataTypeMapping dataTypeMapping, Map<String, TypeData> typeMap) throws IOException {
+        handleDirectMap(typeMap, dataTypeMapping.getDirectMap());
+        handlePackages(log, typeMap, dataTypeMapping.getPackages());
+        handleExternalResources(log, typeMap, dataTypeMapping.getExternalResources());
+    }
 
-	/**
-	 * Handles the Direct Mapping.
-	 *
-	 * @param typeMap
-	 *            the Resolved Map
-	 * @param directMap
-	 *            Direct Mapping
-	 */
-	private static void handleDirectMap(Map<String, TypeData> typeMap, Map<String, String> directMap) {
-		for (Entry<String, String> directMapEntry : directMap.entrySet()) {
-			String alias = directMapEntry.getKey();
-			typeMap.put(alias, getTypeData(directMapEntry.getValue()));
-		}
-	}
+    /**
+     * Handles the Direct Mapping.
+     *
+     * @param typeMap
+     *            the Resolved Map
+     * @param directMap
+     *            Direct Mapping
+     */
+    private static void handleDirectMap(Map<String, TypeData> typeMap, Map<String, String> directMap) {
+        for (Entry<String, String> directMapEntry : directMap.entrySet()) {
+            String alias = directMapEntry.getKey();
+            typeMap.put(alias, getTypeData(directMapEntry.getValue()));
+        }
+    }
 
-	/**
-	 * Handles the Packages to scan.
-	 *
-	 * @param log
-	 *            Log
-	 * @param typeMap
-	 *            the Resolved Map
-	 * @param packages
-	 *            Packages to scan
-	 */
-	private static void handlePackages(Log log, Map<String, TypeData> typeMap, Set<String> packages) {
-		for (String package_ : packages) {
-			log.info(String.format("# Scanning package %s", package_));
-			ClassPathScanningCandidateComponentProvider scanner = new CustomClassPathScanningCandidateComponentProvider();
-			scanner.addIncludeFilter(new ClassTypeFilter(package_));
-			Set<BeanDefinition> components = scanner.findCandidateComponents(package_);
-			for (BeanDefinition component : components) {
-				TypeData typeData = getTypeData(component.getBeanClassName());
+    /**
+     * Handles the Packages to scan.
+     *
+     * @param log
+     *            Log
+     * @param typeMap
+     *            the Resolved Map
+     * @param packages
+     *            Packages to scan
+     */
+    private static void handlePackages(Log log, Map<String, TypeData> typeMap, Set<String> packages) {
+        for (String package_ : packages) {
+            log.info(String.format("# Scanning package %s", package_));
+            ClassPathScanningCandidateComponentProvider scanner = new CustomClassPathScanningCandidateComponentProvider();
+            scanner.addIncludeFilter(new ClassTypeFilter(package_));
+            Set<BeanDefinition> components = scanner.findCandidateComponents(package_);
+            for (BeanDefinition component : components) {
+                TypeData typeData = getTypeData(component.getBeanClassName());
                 log.info(String.format("    %s -> %s", typeData.getName(), typeData));
-				typeMap.put(typeData.getName(), typeData);
-			}
-		}
-	}
+                typeMap.put(typeData.getName(), typeData);
+            }
+        }
+    }
 
-	/**
-	 * Handles the External Resources.
-	 * 
-	 *
-	 * @param log
-	 *            Log
-	 * @param typeMap
-	 *            the Resolved Map
-	 * @param externalResources
-	 *            External Resources
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 */
-	private static void handleExternalResources(Log log, Map<String, TypeData> typeMap, Set<URL> externalResources) throws IOException {
-		for (URL externalResource : externalResources) {
-			log.info(String.format("--- External Resource -> %s ---", externalResource.toString()));
-			DataTypeMapping dataTypeMapping = null;
-			try (InputStream is = externalResource.openStream()) {
-				Yaml yaml = new Yaml();
-				dataTypeMapping = yaml.loadAs(is, DataTypeMapping.class);
-			}
-			if (dataTypeMapping != null) {
-				handle(log, dataTypeMapping, typeMap);
-			}
-		}
-	}
+    /**
+     * Handles the External Resources.
+     * 
+     *
+     * @param log
+     *            Log
+     * @param typeMap
+     *            the Resolved Map
+     * @param externalResources
+     *            External Resources
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
+    private static void handleExternalResources(Log log, Map<String, TypeData> typeMap, Set<URL> externalResources) throws IOException {
+        for (URL externalResource : externalResources) {
+            log.info(String.format("--- External Resource -> %s ---", externalResource.toString()));
+            DataTypeMapping dataTypeMapping = null;
+            try (InputStream is = externalResource.openStream()) {
+                Yaml yaml = new Yaml();
+                dataTypeMapping = yaml.loadAs(is, DataTypeMapping.class);
+            }
+            if (dataTypeMapping != null) {
+                handle(log, dataTypeMapping, typeMap);
+            }
+        }
+    }
 
-	/**
-	 * Returns the type data.
-	 *
-	 * @param fullyQualifiedName
-	 *            Fully qualified name
-	 * @return Type data
-	 */
-	private static TypeData getTypeData(String fullyQualifiedName) {
-		TypeData result = null;
+    /**
+     * Returns the type data.
+     *
+     * @param fullyQualifiedName
+     *            Fully qualified name
+     * @return Type data
+     */
+    private static TypeData getTypeData(String fullyQualifiedName) {
+        TypeData result = null;
 
-		int index = fullyQualifiedName.lastIndexOf('.');
-		String name = fullyQualifiedName.substring(index + 1);
-		result = new TypeData(fullyQualifiedName, name);
+        int index = fullyQualifiedName.lastIndexOf('.');
+        String name = fullyQualifiedName.substring(index + 1);
+        result = new TypeData(fullyQualifiedName, name);
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * Private constructor.
-	 */
-	private DataTypeMappingHandler() {
-	}
+    /**
+     * Private constructor.
+     */
+    private DataTypeMappingHandler() {
+    }
 
 }

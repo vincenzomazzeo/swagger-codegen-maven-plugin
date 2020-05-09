@@ -34,41 +34,41 @@ package it.ninjatech.swaggercodegenmavenplugin.configuration;
  */
 public enum DateLibrary {
 
-        /** Legacy library. */
-		LEGACY("legacy"),
+    /** Legacy library. */
+    LEGACY("legacy"),
 
-		/** Java8 library. */
-		JAVA8("java8"),
+    /** Java8 library. */
+    JAVA8("java8"),
 
-		/** Java8 JSR-310 library. */
-		JAVA8_LOCAL_DATE_TIME("java8-localdatetime"),
+    /** Java8 JSR-310 library. */
+    JAVA8_LOCAL_DATE_TIME("java8-localdatetime"),
 
-		/** Joda library. */
-		JODA("joda"),
+    /** Joda library. */
+    JODA("joda"),
 
-		/** ThreeTen backport library. */
-		THREE_TEN("threetenbp");
+    /** ThreeTen backport library. */
+    THREE_TEN("threetenbp");
 
-	/** Value. */
-	private final String value;
+    /** Value. */
+    private final String value;
 
-	/**
-	 * Instantiates a new DateLibrary.
-	 *
-	 * @param value
-	 *            value
-	 */
-	private DateLibrary(String value) {
-		this.value = value;
-	}
+    /**
+     * Instantiates a new DateLibrary.
+     *
+     * @param value
+     *            value
+     */
+    private DateLibrary(String value) {
+        this.value = value;
+    }
 
-	/**
-	 * Returns the value
-	 * 
-	 * @return The value
-	 */
-	public String getValue() {
-		return this.value;
-	}
+    /**
+     * Returns the value
+     * 
+     * @return The value
+     */
+    public String getValue() {
+        return this.value;
+    }
 
 }

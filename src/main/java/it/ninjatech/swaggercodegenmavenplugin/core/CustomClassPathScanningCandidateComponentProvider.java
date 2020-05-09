@@ -39,19 +39,19 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
  */
 public class CustomClassPathScanningCandidateComponentProvider extends ClassPathScanningCandidateComponentProvider {
 
-	/**
-	 * Instantiates a new Custom Class Path Scanning Candidate Component Provider.
-	 */
-	protected CustomClassPathScanningCandidateComponentProvider() {
-		super(false);
-	}
+    /**
+     * Instantiates a new Custom Class Path Scanning Candidate Component Provider.
+     */
+    protected CustomClassPathScanningCandidateComponentProvider() {
+        super(false);
+    }
 
-	/**
-	 * Overridden to accept all the classes.
-	 */
-	@Override
-	protected boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) {
-		return true;
-	}
+    /**
+     * Overridden to accept all the classes.
+     */
+    @Override
+    protected boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) {
+        return true;
+    }
 
 }

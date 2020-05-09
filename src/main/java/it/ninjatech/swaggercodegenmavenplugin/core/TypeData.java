@@ -33,41 +33,41 @@ package it.ninjatech.swaggercodegenmavenplugin.core;
  */
 public final class TypeData {
 
-	/** The fully qualified name. */
-	private final String fullyQualifiedName;
+    /** The fully qualified name. */
+    private final String fullyQualifiedName;
 
-	/** The name. */
-	private final String name;
+    /** The name. */
+    private final String name;
 
-	/**
-	 * Instantiates a new Type Data.
-	 *
-	 * @param fullyQualifiedName
-	 *            Fully qualified name
-	 * @param name
-	 *            Name
-	 */
-	protected TypeData(String fullyQualifiedName, String name) {
-		this.fullyQualifiedName = fullyQualifiedName;
-		this.name = name;
-	}
+    /**
+     * Instantiates a new Type Data.
+     *
+     * @param fullyQualifiedName
+     *            Fully qualified name
+     * @param name
+     *            Name
+     */
+    protected TypeData(String fullyQualifiedName, String name) {
+        this.fullyQualifiedName = fullyQualifiedName;
+        this.name = name;
+    }
 
-	/**
-	 * Returns the fully qualified name.
-	 *
-	 * @return Fully qualified name
-	 */
-	protected String getFullyQualifiedName() {
-		return fullyQualifiedName;
-	}
+    /**
+     * Returns the fully qualified name.
+     *
+     * @return Fully qualified name
+     */
+    protected String getFullyQualifiedName() {
+        return fullyQualifiedName;
+    }
 
-	/**
-	 * Returns the name.
-	 *
-	 * @return Name
-	 */
-	protected String getName() {
-		return name;
-	}
+    /**
+     * Returns the name.
+     *
+     * @return Name
+     */
+    protected String getName() {
+        return name;
+    }
 
 }
