@@ -60,25 +60,25 @@ import io.swagger.util.Json;
  */
 public final class Codegen extends SpringCodegen {
 
-    /** The Constant FORCE_JDK8_OFF. */
+    /** FORCE_JDK8_OFF. */
     protected static final String FORCE_JDK8_OFF = "forceJdk8Off";
 
-    /** The Constant APIS_SUFFIX. */
+    /** APIS_SUFFIX. */
     protected static final String API_SUFFIX = "apiSuffix";
 
-    /** The Constant ADD_SECURITY_HEADERS_AS_ARGUMENTS */
+    /** ADD_SECURITY_HEADERS_AS_ARGUMENTS */
     protected static final String SECURITY_HEADERS_AS_ARGUMENTS = "securityHeadersAsArguments";
 
-    /** The Constant BASE_PATH_AS_ROOT */
+    /** BASE_PATH_AS_ROOT */
     protected static final String BASE_PATH_AS_ROOT = "basePathAsRoot";
 
-    /** The Constant X_TYPE. */
+    /** X_TYPE. */
     private static final String X_TYPE = "x-nt-type";
 
-    /** The Constant X_SUPER_CLASS. */
+    /** X_SUPER_CLASS. */
     private static final String X_SUPER_CLASS = "x-nt-super-class";
 
-    /** The Constant X_INTERFACE_NAME. */
+    /** X_INTERFACE_NAME. */
     private static final String X_INTERFACE_NAME = "x-nt-interface-name";
 
     /*
@@ -112,7 +112,9 @@ public final class Codegen extends SpringCodegen {
     }
 
     /**
-     * Overridden to set the generation of only the interfaces.
+     * Overridden to set interfaces generation only.
+     * 
+     * @see io.swagger.codegen.languages.SpringCodegen#processOpts()
      */
     @Override
     public void processOpts() {
@@ -129,6 +131,11 @@ public final class Codegen extends SpringCodegen {
     /**
      * Overridden to handle the extension parameters (x-) for the mapping of the
      * external Model classes.
+     * 
+     * @see io.swagger.codegen.languages.SpringCodegen#getSwaggerType(Property)
+     * 
+     * @param property
+     *            property
      */
     @Override
     public String getSwaggerType(Property property) {
@@ -145,6 +152,11 @@ public final class Codegen extends SpringCodegen {
 
     /**
      * Overridden to handle the inheritance feature of the Model classes.
+     * 
+     * @see io.swagger.codegen.languages.SpringCodegen#postProcessModels(Map)
+     * 
+     * @param objs
+     *            objects
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -171,6 +183,11 @@ public final class Codegen extends SpringCodegen {
     /**
      * Overridden to handle the usage of the external Model classes as parameter of
      * the API's.
+     * 
+     * @see io.swagger.codegen.languages.SpringCodegen#postProcessOperations(Map)
+     * 
+     * @param objs
+     *            objects
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -208,6 +225,11 @@ public final class Codegen extends SpringCodegen {
     /**
      * Overriden to handle the usage of the external Model classes as body of the
      * API's.
+     * 
+     * @see io.swagger.codegen.languages.SpringCodegen#postProcessParameter(CodegenParameter)
+     * 
+     * @param parameter
+     *            parameter
      */
     @Override
     public void postProcessParameter(CodegenParameter parameter) {
@@ -219,10 +241,13 @@ public final class Codegen extends SpringCodegen {
                     JsonNode xTypeNode = schemaNode.findPath(X_TYPE);
                     if (!xTypeNode.isMissingNode()) {
                         Map<String, Object> vendorExtensions = Collections.singletonMap(X_TYPE, xTypeNode.asText());
-                        Property property = PropertyBuilder.build(parameter.baseType.toLowerCase(), null, Collections.singletonMap(PropertyId.VENDOR_EXTENSIONS, vendorExtensions));
-                        String type = getSwaggerType(property);
-                        parameter.baseType = type;
-                        parameter.dataType = this.typeMapping.get(type);
+                        if (!parameter.isContainer) {
+                            Property property = PropertyBuilder.build(parameter.baseType.toLowerCase(), null,
+                                                                      Collections.singletonMap(PropertyId.VENDOR_EXTENSIONS, vendorExtensions));
+                            String type = getSwaggerType(property);
+                            parameter.baseType = type;
+                            parameter.dataType = this.typeMapping.get(type);
+                        }
                         parameter.isPrimitiveType = true;
                         parameter.vendorExtensions.putAll(vendorExtensions);
                     }
@@ -235,6 +260,14 @@ public final class Codegen extends SpringCodegen {
         super.postProcessParameter(parameter);
     }
 
+    /**
+     * Overriden to handle the API interfaces suffix.
+     * 
+     * @see io.swagger.codegen.languages.SpringCodegen#toApiName(String)
+     * 
+     * @param name
+     *            name
+     */
     @Override
     public String toApiName(String name) {
         String result = null;
@@ -249,6 +282,14 @@ public final class Codegen extends SpringCodegen {
         return result;
     }
 
+    /**
+     * Overriden to handle base path.
+     * 
+     * @see io.swagger.codegen.languages.SpringCodegen#preprocessSwagger(Swagger)
+     * 
+     * @param swagger
+     *            swagger
+     */
     @Override
     public void preprocessSwagger(Swagger swagger) {
         super.preprocessSwagger(swagger);
@@ -259,6 +300,22 @@ public final class Codegen extends SpringCodegen {
         }
     }
 
+    /**
+     * Overriden to change the name of API interfaces.
+     * 
+     * @see io.swagger.codegen.languages.SpringCodegen#fromOperation(String, String, Operation, Map, Swagger)
+     * 
+     * @param path
+     *            path
+     * @param httpMethod
+     *            httpMethod
+     * @param operation
+     *            operation
+     * @param definitions
+     *            definitions
+     * @param swagger
+     *            swagger
+     */
     @Override
     public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
         CodegenOperation result = null;
@@ -271,6 +328,22 @@ public final class Codegen extends SpringCodegen {
         return result;
     }
 
+    /**
+     * Overriden to change the name of API interfaces.
+     * 
+     * @see io.swagger.codegen.languages.SpringCodegen#addOperationToGroup(String, String, Operation, CodegenOperation, Map)
+     * 
+     * @param tag
+     *            tag
+     * @param resourcePath
+     *            resourcePath
+     * @param operation
+     *            operation
+     * @param co
+     *            co
+     * @param operations
+     *            operations
+     */
     @Override
     public void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations) {
         super.addOperationToGroup(tag,
@@ -312,7 +385,7 @@ public final class Codegen extends SpringCodegen {
     }
 
     /**
-     * Add ApiKey Security Headers to the parameters of the method
+     * Adds ApiKey Security Headers to the parameters of the method
      * 
      * @param operation
      *            Operation
