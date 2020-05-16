@@ -30,7 +30,10 @@ import java.util.List;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.sonatype.plexus.build.incremental.BuildContext;
+import org.sonatype.plexus.build.incremental.DefaultBuildContext;
 
 import io.swagger.codegen.DefaultGenerator;
 import it.ninjatech.swaggercodegenmavenplugin.configuration.Configuration;
@@ -50,6 +53,9 @@ import it.ninjatech.swaggercodegenmavenplugin.core.GeneratorFactory;
  * @since 1.0.0
  */
 public abstract class AbstractGenerateMojo extends AbstractMojo {
+
+    @Component
+    private BuildContext buildContext = new DefaultBuildContext();
 
     /** ID. */
     @Parameter(required = true, defaultValue = "false")
@@ -125,14 +131,22 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
         try {
             GeneratorFactory generatorFactory = GeneratorFactory.getInstance(getLog(), getConfiguration());
 
+            Boolean refresh = false;
             for (URL sourceFile : this.sourceFiles) {
-                getLog().info(String.format("Processing %s", sourceFile.toString()));
+                if (this.buildContext.hasDelta(sourceFile.getFile())) {
+                    getLog().info(String.format("Processing %s", sourceFile.toString()));
 
-                DefaultGenerator defaultGenerator = generatorFactory.make(sourceFile);
+                    DefaultGenerator defaultGenerator = generatorFactory.make(sourceFile);
 
-                postDefaultGeneratorSetup(defaultGenerator);
+                    postDefaultGeneratorSetup(defaultGenerator);
 
-                defaultGenerator.generate();
+                    defaultGenerator.generate();
+
+                    refresh = true;
+                }
+            }
+            if (refresh) {
+                this.buildContext.refresh(this.outputFolder);
             }
         } catch (Exception e) {
             throw new MojoFailureException("Failure", e);
