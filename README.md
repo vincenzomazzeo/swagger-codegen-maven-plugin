@@ -68,6 +68,35 @@ It is intended to be used in projects that only need Model and API generation.
       x-nt-interface-name: MyClassName
       [...]
   ```
+ 
+- Generics support for Models
+
+  It is possible to define Models containing fields with generics by specifying the list of templates in the extension `x-nt-type-templates`:
+  ```
+    TestModel:
+      [...]
+      properties:
+        name:
+          type: string
+        page:
+          type: string
+          x-nt-type: NTPage
+        otherPage:
+          type: string
+          x-nt-type: AbstractGenericsModel
+          x-nt-type-templates: ['?', NTTemplateC]
+  ```
+
+  It is possible to define Models extending classes with generics by specifyng the list of templates in the extension `x-nt-super-class-templates`:
+  ```
+    GenericsModel:
+      x-nt-super-class:
+        - AbstractGenericsModel
+      x-nt-super-class-templates: [NTTemplateA, NTTemplateB]
+      type: object
+      properties: [...]
+  ```
+
 
 ## Build
 
@@ -84,7 +113,7 @@ Run Build:
 
 ## Releases
 
-The current release is **1.3.0**.
+The current release is **1.4.0**.
 
 ## Basic usage
 
