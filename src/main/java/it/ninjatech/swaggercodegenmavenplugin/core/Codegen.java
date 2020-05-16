@@ -35,6 +35,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenParameter;
+import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenResponse;
 import io.swagger.codegen.CodegenSecurity;
 import io.swagger.codegen.CodegenType;
@@ -55,7 +56,7 @@ import io.swagger.util.Json;
  * </p>
  * 
  * @author Vincenzo Mazzeo
- * @version 3.0
+ * @version 4.0
  * @since 1.0.0
  */
 public final class Codegen extends SpringCodegen {
@@ -80,6 +81,12 @@ public final class Codegen extends SpringCodegen {
 
     /** X_INTERFACE_NAME. */
     private static final String X_INTERFACE_NAME = "x-nt-interface-name";
+
+    /** X_TYPE_TEMPLATES. */
+    private static final String X_TYPE_TEMPLATES = "x-nt-type-templates";
+
+    /** X_SUPER_CLASS_TEMPLATES. */
+    private static final String X_SUPER_CLASS_TEMPLATES = "x-nt-super-class-templates";
 
     /*
      * (non-Javadoc)
@@ -151,7 +158,7 @@ public final class Codegen extends SpringCodegen {
     }
 
     /**
-     * Overridden to handle the inheritance feature of the Model classes.
+     * Overridden to handle inheritance feature of Model classes and templating.
      * 
      * @see io.swagger.codegen.languages.SpringCodegen#postProcessModels(Map)
      * 
@@ -161,20 +168,12 @@ public final class Codegen extends SpringCodegen {
     @SuppressWarnings("unchecked")
     @Override
     public Map<String, Object> postProcessModels(Map<String, Object> objs) {
-        // Super Class Management
         List<Map<String, ?>> modelMaps = (List<Map<String, ?>>) objs.get("models");
 
         for (Map<String, ?> modelsMap : modelMaps) {
             CodegenModel model = (CodegenModel) modelsMap.get("model");
-            if (model.vendorExtensions.containsKey(X_SUPER_CLASS)) {
-                List<String> superClasses = (List<String>) model.vendorExtensions.get(X_SUPER_CLASS);
-                if (superClasses.size() != 1) {
-                    throw new RuntimeException(String.format("%s extensions must have one and only one value", X_SUPER_CLASS));
-                }
-                String superClass = superClasses.get(0);
-                addImport(objs, superClass);
-                model.parent = this.typeMapping.get(superClass);
-            }
+            handleSuperClass(model, objs);
+            handleTemplateVars(model, objs);
         }
 
         return super.postProcessModels(objs);
@@ -352,6 +351,77 @@ public final class Codegen extends SpringCodegen {
                                   operation,
                                   co,
                                   operations);
+    }
+
+    /**
+     * Model super class management.
+     *
+     * @param model
+     *            model
+     * @param objs
+     *            objs
+     */
+    @SuppressWarnings("unchecked")
+    private void handleSuperClass(CodegenModel model, Map<String, Object> objs) {
+        if (model.vendorExtensions.containsKey(X_SUPER_CLASS)) {
+            List<String> superClasses = (List<String>) model.vendorExtensions.get(X_SUPER_CLASS);
+            if (superClasses.size() != 1) {
+                throw new RuntimeException(String.format("%s extensions must have one and only one value", X_SUPER_CLASS));
+            }
+            String superClass = superClasses.get(0);
+            addImport(objs, superClass);
+            model.parent = this.typeMapping.get(superClass);
+
+            if (model.vendorExtensions.containsKey(X_SUPER_CLASS_TEMPLATES)) {
+                model.parent = handleTemplates(model.parent, (List<String>) model.vendorExtensions.get(X_SUPER_CLASS_TEMPLATES), objs);
+            }
+        }
+    }
+
+    /**
+     * Model parameters with templates management.
+     *
+     * @param model
+     *            model
+     * @param objs
+     *            objs
+     */
+    @SuppressWarnings("unchecked")
+    private void handleTemplateVars(CodegenModel model, Map<String, Object> objs) {
+        List<CodegenProperty> templateVars = model.allVars.stream().filter(e -> e.vendorExtensions.containsKey(X_TYPE_TEMPLATES)).collect(Collectors.toList());
+        for (CodegenProperty templateVar : templateVars) {
+            String templateType = handleTemplates(templateVar.baseType, (List<String>) templateVar.vendorExtensions.get(X_TYPE_TEMPLATES), objs);
+            templateVar.baseType = templateType;
+            templateVar.complexType = templateType;
+            templateVar.datatype = templateType;
+            templateVar.datatypeWithEnum = templateType;
+        }
+    }
+
+    /**
+     * Templates handling.
+     *
+     * @param type
+     *            base type
+     * @param templates
+     *            templates
+     * @param objs
+     *            objs
+     * @return base type with templates
+     */
+    private String handleTemplates(String type, List<String> templates, Map<String, Object> objs) {
+        String result = null;
+
+        if (!templates.isEmpty()) {
+            templates.stream().filter(e -> !e.equals("?")).forEach(e -> addImport(objs, e));
+            result = String.format("%s<%s>",
+                                   type,
+                                   templates.stream().map(e -> this.typeMapping.containsKey(e) ? this.typeMapping.get(e) : e).collect(Collectors.joining(", ")));
+        } else {
+            result = type;
+        }
+
+        return result;
     }
 
     /**
