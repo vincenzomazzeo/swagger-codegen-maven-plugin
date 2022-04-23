@@ -38,7 +38,7 @@
         <maven-plugin-annotations.version>3.6.0</maven-plugin-annotations.version>
         <plexus-build-api.version>0.0.7</plexus-build-api.version>
         <swagger-codegen.version>2.4.13</swagger-codegen.version>
-        <spring.version>5.1.15.RELEASE</spring.version>
+        <spring.version>5.3.19</spring.version>
     </properties>
 
     <dependencies>
